@@ -49,3 +49,6 @@ bld/
 .exe
 .out
 .app
+
+# Zip files
+.zip
