@@ -22,7 +22,7 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{8b5c5e59-62e1-4c94-9cf4-7f27ac026553}</ProjectGuid>
-    <RootNamespace>Marlboro</RootNamespace>
+    <RootNamespace>Hooded</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>Hooded</ProjectName>
   </PropertyGroup>
