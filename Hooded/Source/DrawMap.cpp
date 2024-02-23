@@ -22,6 +22,7 @@ void DrawMap(const Map* map, sf::Image* mapSketch, sf::Texture* mapTexture, sf::
 			sf::Color pixelRight = sf::Color(0, 0, 0, 0);
 			sf::Color pixelUp = sf::Color(0, 0, 0, 0);
 
+			cellSprite.setScale(sf::Vector2f(GAME_SCALE, GAME_SCALE));
 			cellSprite.setPosition((float)SPRITE_CELL_SIZE * x, (float)SPRITE_CELL_SIZE * y);
 
 			// ignoring the empty pixels.
