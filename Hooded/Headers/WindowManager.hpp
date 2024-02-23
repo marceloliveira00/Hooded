@@ -3,12 +3,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "GameConfig.hpp"
+#include "../Headers/GameConfig.hpp"
 
 class WindowManager
 {
 public:
-	sf::RenderWindow* m_Window;
+	sf::RenderWindow* m_window;
 
 	WindowManager();
 	~WindowManager();
@@ -18,6 +18,6 @@ public:
 
 private:
 	float timer = 0.f;
-	sf::Event* event;
-	sf::ContextSettings settings;
+	sf::Event* m_event;
+	sf::ContextSettings m_settings;
 };

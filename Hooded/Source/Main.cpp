@@ -1,4 +1,4 @@
-#include "GameManager.hpp"
+#include "../Headers/GameManager.hpp"
 
 int main()
 {

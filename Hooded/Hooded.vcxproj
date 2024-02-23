@@ -18,6 +18,38 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Assets\Maps\LevelSketch.hpp" />
+    <ClInclude Include="Headers\ConvertSketch.hpp" />
+    <ClInclude Include="Headers\DrawMap.hpp" />
+    <ClInclude Include="Headers\Entity.hpp" />
+    <ClInclude Include="Headers\Enums\Cell.hpp" />
+    <ClInclude Include="Headers\GameConfig.hpp" />
+    <ClInclude Include="Headers\GameManager.hpp" />
+    <ClInclude Include="Headers\Hooded.hpp" />
+    <ClInclude Include="Headers\MapManager.hpp" />
+    <ClInclude Include="Headers\WindowManager.hpp" />
+    <ClInclude Include="Headers\Enums\Level.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Entities\Hooded.png" />
+    <Image Include="Assets\Maps\LevelSketch1.png" />
+    <Image Include="Assets\Maps\Village\TilesetGround.png" />
+    <Image Include="Assets\Props\ChestAnimation.png" />
+    <Image Include="Assets\Props\FX_Flame.png" />
+    <Image Include="Assets\Props\FX_TorchFlame.png" />
+    <Image Include="Assets\Props\VillageProps.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\ConvertSketch.cpp" />
+    <ClCompile Include="Source\DrawMap.cpp" />
+    <ClCompile Include="Source\Entity.cpp" />
+    <ClCompile Include="Source\GameManager.cpp" />
+    <ClCompile Include="Source\Hooded.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\MapManager.cpp" />
+    <ClCompile Include="Source\WindowManager.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -143,22 +175,6 @@
       <AdditionalDependencies>sfml-system-s.lib;sfml-window-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-audio-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="Hooded.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="WindowManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Entity.hpp" />
-    <ClInclude Include="GameConfig.hpp" />
-    <ClInclude Include="GameManager.hpp" />
-    <ClInclude Include="Hooded.hpp" />
-    <ClInclude Include="Map.hpp" />
-    <ClInclude Include="WindowManager.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
