@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets\Maps\LevelSketch.hpp" />
+    <ClInclude Include="Headers\Camera.hpp" />
     <ClInclude Include="Headers\ConvertSketch.hpp" />
     <ClInclude Include="Headers\DrawMap.hpp" />
     <ClInclude Include="Headers\Entity.hpp" />
@@ -41,6 +42,7 @@
     <Image Include="Assets\Props\VillageProps.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\ConvertSketch.cpp" />
     <ClCompile Include="Source\DrawMap.cpp" />
     <ClCompile Include="Source\Entity.cpp" />

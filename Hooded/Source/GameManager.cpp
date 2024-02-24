@@ -36,10 +36,10 @@ void GameManager::Update()
 {
 	m_deltaTime = (float)m_clock.restart().asMilliseconds(); // Updates delta time
 
-	m_windowManager->PollEvents();
-	m_windowManager->SetFPS(m_deltaTime);
+	m_windowManager->Update(m_deltaTime);
 
 	m_mapManager->Update();
-	m_hooded->Update(m_deltaTime);
+
+	m_hooded->Update(m_windowManager->m_camera, m_deltaTime);
 }
  

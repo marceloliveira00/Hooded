@@ -26,7 +26,7 @@ Hooded::Hooded()
 	InitHooded();
 }
 
-const void Hooded::Move(float deltaTime, sf::Sprite* sprite)
+const void Hooded::Move(Camera* camera, float deltaTime, sf::Sprite* sprite)
 {
 	sf::Vector2f position = sprite->getPosition();
 
@@ -49,7 +49,8 @@ const void Hooded::Move(float deltaTime, sf::Sprite* sprite)
 		sprite->setPosition(position.x, position.y + 1 * m_speed * deltaTime);
 	}
 
-	this->m_hoodedBoundingRectangle.setPosition(position.x, position.y);
+	m_hoodedBoundingRectangle.setPosition(position.x, position.y);
+	camera->SetPosition(position.x, position.y);
 }
 
 const void Hooded::Render(sf::RenderTarget* target) const
@@ -58,7 +59,7 @@ const void Hooded::Render(sf::RenderTarget* target) const
 	target->draw(m_hoodedBoundingRectangle);
 }
 
-const void Hooded::Update(float deltaTime)
+const void Hooded::Update(Camera* camera, float deltaTime)
 {
-	Move(deltaTime, &m_hooded);
+	Move(camera, deltaTime, &m_hooded);
 }

@@ -2,6 +2,7 @@
 
 WindowManager::WindowManager() : m_event(new sf::Event())
 {
+	m_camera = new Camera();
 	m_settings.antialiasingLevel = 8;
 
 	m_window = new sf::RenderWindow(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Hooded");
@@ -11,10 +12,18 @@ WindowManager::WindowManager() : m_event(new sf::Event())
 WindowManager::~WindowManager()
 {
 	delete m_event;
+	delete m_camera;
 	delete m_window;
 }
 
-void WindowManager::PollEvents()
+void WindowManager::Update(float deltaTime)
+{
+	PollEvents();
+	SetFPS(deltaTime);
+	SetCameraPos();
+}
+
+const void WindowManager::PollEvents() const
 {
 	while (m_window->pollEvent(*m_event))
 	{
@@ -25,6 +34,11 @@ void WindowManager::PollEvents()
 			break;
 		}
 	}
+}
+
+const void WindowManager::SetCameraPos() const
+{
+	m_window->setView(m_camera->GetCameraView());
 }
 
 void WindowManager::SetFPS(float deltaTime)

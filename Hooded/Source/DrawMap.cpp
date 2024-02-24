@@ -8,6 +8,7 @@ void DrawMap(const Map* map, sf::Image* mapSketch, sf::Texture* mapTexture, sf::
 	unsigned short mapStart = (unsigned short)floor(view_X / SPRITE_CELL_SIZE);
 
 	sf::Sprite cellSprite(*mapTexture);
+	cellSprite.setScale(sf::Vector2f(GAME_SCALE, GAME_SCALE));
 
 	for (unsigned short x = mapStart; x < mapEnd; x++)
 	{
@@ -22,7 +23,6 @@ void DrawMap(const Map* map, sf::Image* mapSketch, sf::Texture* mapTexture, sf::
 			sf::Color pixelRight = sf::Color(0, 0, 0, 0);
 			sf::Color pixelUp = sf::Color(0, 0, 0, 0);
 
-			cellSprite.setScale(sf::Vector2f(GAME_SCALE, GAME_SCALE));
 			cellSprite.setPosition((float)SPRITE_CELL_SIZE * x, (float)SPRITE_CELL_SIZE * y);
 
 			// ignoring the empty pixels.
@@ -30,17 +30,13 @@ void DrawMap(const Map* map, sf::Image* mapSketch, sf::Texture* mapTexture, sf::
 			{
 				// getting pixels around the pixel we're currently checking.
 				if (0 < x) pixelLeft = mapSketch->getPixel(x - 1, y + 2 * mapHeight);
-
 				if (0 < y) pixelUp = mapSketch->getPixel(x, y + 2 * mapHeight - 1);
-
 				if (x < mapSketch->getSize().x - 1) pixelRight = mapSketch->getPixel(1 + x, y + 2 * mapHeight);
-
 				if (y < mapHeight - 1) pixelDown = mapSketch->getPixel(x, 1 + y + 2 * mapHeight);
 
 				if (sf::Color(255, 255, 255) == pixel) // clouds
 				{
 					sprite_X = 8;
-
 					if (sf::Color(255, 255, 255) == pixelUp) sprite_Y = 1;
 
 					if (sf::Color(255, 255, 255) == pixelLeft)
@@ -52,7 +48,6 @@ void DrawMap(const Map* map, sf::Image* mapSketch, sf::Texture* mapTexture, sf::
 				else if (sf::Color(146, 219, 0) == pixel) // grass
 				{
 					sprite_X = 5;
-
 					if (sf::Color(146, 219, 0) == pixelLeft)
 					{
 						if (sf::Color(146, 219, 0) != pixelRight) sprite_X = 6;
@@ -65,7 +60,6 @@ void DrawMap(const Map* map, sf::Image* mapSketch, sf::Texture* mapTexture, sf::
 				else if (sf::Color(0, 73, 0) == pixel) // hills outline
 				{
 					sprite_Y = 1;
-
 					if (sf::Color(0, 109, 0) == pixelLeft)
 					{
 						if (sf::Color(0, 109, 0) != pixelRight) sprite_X = 2;
@@ -83,12 +77,10 @@ void DrawMap(const Map* map, sf::Image* mapSketch, sf::Texture* mapTexture, sf::
 				else if (sf::Color(109, 255, 85) == pixel) // flagpole
 				{
 					sprite_X = 12;
-
 					if (sf::Color(109, 255, 85) == pixelUp) sprite_Y = 1;
 				}
 
 				cellSprite.setTextureRect(sf::IntRect(SPRITE_CELL_SIZE * sprite_X, SPRITE_CELL_SIZE * sprite_Y, SPRITE_CELL_SIZE, SPRITE_CELL_SIZE));
-
 				target->draw(cellSprite);
 			}
 
@@ -97,10 +89,10 @@ void DrawMap(const Map* map, sf::Image* mapSketch, sf::Texture* mapTexture, sf::
 			{
 				if (Cell::Pipe == (*map)[x][y]) // pipes
 				{
-					if (Cell::Pipe == (*map)[x][y - 1]) sprite_Y = 1;
+					if (Cell::Pipe == (*map)[x][static_cast<unsigned short>(y - 1)]) sprite_Y = 1;
 					else sprite_Y = 0;
 
-					if (Cell::Pipe == (*map)[x - 1][y]) sprite_X = 11;
+					if (Cell::Pipe == (*map)[static_cast<unsigned short>(x - 1)][y]) sprite_X = 11;
 					else sprite_X = 10;
 				}
 				else if (Cell::QuestionBlock == (*map)[x][y]) // question blocks
@@ -111,7 +103,6 @@ void DrawMap(const Map* map, sf::Image* mapSketch, sf::Texture* mapTexture, sf::
 				else if (Cell::Wall == (*map)[x][y])
 				{
 					sprite_Y = 0;
-
 					if (sf::Color(0, 0, 0) == mapSketch->getPixel(x, y)) sprite_X = 2; // walls
 					else sprite_X = 3; // solid blocks
 				}
