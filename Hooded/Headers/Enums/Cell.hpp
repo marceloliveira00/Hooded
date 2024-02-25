@@ -6,6 +6,7 @@ enum Cell : unsigned short
 	Brick,
 	Coin,
 	Empty,
+	Grass,
 	Pipe,
 	QuestionBlock,
 	Wall

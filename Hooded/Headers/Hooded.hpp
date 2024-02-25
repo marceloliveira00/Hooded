@@ -17,8 +17,8 @@ public:
 private:
 	const float initialHoodedPosX = 500.f;
 	const float initialHoodedPosY = 300.f;
-	unsigned short tileHeight = 32;
-	unsigned short tileWidth = 32;
+	unsigned short tileHeight = DEFAULT_SPRITE_SIZE;
+	unsigned short tileWidth = DEFAULT_SPRITE_SIZE;
 
 	sf::Sprite m_hooded;
 	sf::RectangleShape m_hoodedBoundingRectangle;

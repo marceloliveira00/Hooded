@@ -3,17 +3,16 @@
 void Hooded::InitVariables()
 {
 	m_health = 100.f;
-	m_speed = .3f;
+	m_speed = .2f;
 }
 
 void Hooded::InitHooded()
 {
 	m_hoodedTexture.loadFromFile("Assets/Entities/Hooded.png", sf::IntRect(0, 0, tileWidth, tileHeight));
 	m_hooded.setPosition(initialHoodedPosX, initialHoodedPosY);
-	m_hooded.setScale(sf::Vector2f(GAME_SCALE, GAME_SCALE));
 	m_hooded.setTexture(m_hoodedTexture);
 
-	m_hoodedBoundingRectangle.setSize(sf::Vector2f(tileWidth * GAME_SCALE, tileHeight * GAME_SCALE));
+	m_hoodedBoundingRectangle.setSize(sf::Vector2f(tileWidth, tileHeight));
 	m_hoodedBoundingRectangle.setFillColor(sf::Color::Transparent);
 	m_hoodedBoundingRectangle.setOutlineColor(sf::Color::Red);
 	m_hoodedBoundingRectangle.setOutlineThickness(1);

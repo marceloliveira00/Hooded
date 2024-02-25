@@ -14,35 +14,13 @@ void ConvertSketch(Map* map, sf::Image mapSketch, unsigned mapSketch_X, unsigned
 			if (y > mapHeight) continue;
 
 			sf::Color pixel = mapSketch.getPixel(x, y);
-			if (sf::Color(182, 73, 0) == pixel)
+			if (pixel == sf::Color(0, 0, 0))
 			{
-				(*map)[x][y] = Cell::Brick;
-			}
-			else if (sf::Color(255, 255, 0) == pixel)
-			{
-				(*map)[x][y] = Cell::Coin;
-			}
-			// multiple colors because it is needed to know which part of the pipe to draw.
-			else if (sf::Color(0, 146, 0) == pixel || sf::Color(0, 182, 0) == pixel || sf::Color(0, 219, 0) == pixel)
-			{
-				(*map)[x][y] = Cell::Pipe;
-			}
-			else if (sf::Color(255, 73, 85) == pixel || sf::Color(255, 146, 85) == pixel)
-			{
-				(*map)[x][y] = Cell::QuestionBlock;
-			}
-			else if (sf::Color(0, 0, 0) == pixel || sf::Color(146, 73, 0) == pixel)
-			{
-				(*map)[x][y] = Cell::Wall;
+				(*map)[x][y] = Cell::Grass;
 			}
 			else
 			{
 				(*map)[x][y] = Cell::Empty;
-
-				if (sf::Color(0, 255, 255) == pixel)
-				{
-					//levelFinish = x;
-				}
 			}
 		}
 	}
