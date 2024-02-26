@@ -25,31 +25,43 @@ Hooded::Hooded()
 	InitHooded();
 }
 
-const void Hooded::Move(Camera* camera, float deltaTime, sf::Sprite* sprite)
+const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager, sf::Sprite& sprite)
 {
-	sf::Vector2f position = sprite->getPosition();
+	sf::Vector2f position = sprite.getPosition();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		sprite->setTextureRect(sf::IntRect(tileWidth, 0, -tileWidth, tileHeight));
-		sprite->setPosition(position.x - 1 * m_speed * deltaTime, position.y);
+		if (!mapManager.MapCollision(sf::Vector2f(position.x - 1, position.y), sprite.getTextureRect().getSize()))
+		{
+			sprite.setTextureRect(sf::IntRect(tileWidth, 0, -tileWidth, tileHeight));
+			sprite.setPosition(position.x - 1 * m_speed * deltaTime, position.y);
+		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		sprite->setTextureRect(sf::IntRect(0, 0, tileWidth, tileHeight));
-		sprite->setPosition(position.x + 1 * m_speed * deltaTime, position.y);
+		if (!mapManager.MapCollision(sf::Vector2f(position.x + 1, position.y), sprite.getTextureRect().getSize()))
+		{
+			sprite.setTextureRect(sf::IntRect(0, 0, tileWidth, tileHeight));
+			sprite.setPosition(position.x + 1 * m_speed * deltaTime, position.y);
+		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		sprite->setPosition(position.x, position.y - 1 * m_speed * deltaTime);
+		if (!mapManager.MapCollision(sf::Vector2f(position.x, position.y - 1), sprite.getTextureRect().getSize()))
+		{
+			sprite.setPosition(position.x, position.y - 1 * m_speed * deltaTime);
+		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		sprite->setPosition(position.x, position.y + 1 * m_speed * deltaTime);
+		if (!mapManager.MapCollision(sf::Vector2f(position.x, position.y + 1), sprite.getTextureRect().getSize()))
+		{
+			sprite.setPosition(position.x, position.y + 1 * m_speed * deltaTime);
+		}
 	}
 
 	m_hoodedBoundingRectangle.setPosition(position.x, position.y);
-	camera->SetPosition(position.x, position.y);
+	camera.SetPosition(position.x, position.y);
 }
 
 const void Hooded::Render(sf::RenderTarget* target) const
@@ -58,7 +70,7 @@ const void Hooded::Render(sf::RenderTarget* target) const
 	target->draw(m_hoodedBoundingRectangle);
 }
 
-const void Hooded::Update(Camera* camera, float deltaTime)
+const void Hooded::Update(Camera& camera, float deltaTime, MapManager& mapManager)
 {
-	Move(camera, deltaTime, &m_hooded);
+	Move(camera, deltaTime, mapManager, m_hooded);
 }

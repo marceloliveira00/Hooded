@@ -40,6 +40,6 @@ void GameManager::Update()
 
 	m_mapManager->Update();
 
-	m_hooded->Update(m_windowManager->m_camera, m_deltaTime);
+	m_hooded->Update(*m_windowManager->m_camera, m_deltaTime, *m_mapManager);
 }
  

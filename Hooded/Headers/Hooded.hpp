@@ -5,6 +5,7 @@
 #include "../Headers/Camera.hpp"
 #include "../Headers/Entity.hpp"
 #include "../Headers/GameConfig.hpp"
+#include "../Headers/MapManager.hpp"
 
 class Hooded : protected Entity
 {
@@ -12,7 +13,7 @@ public:
 	Hooded();
 
 	const void Render(sf::RenderTarget* target) const;
-	const void Update(Camera* camera, float deltaTime);
+	const void Update(Camera& camera, float deltaTime, MapManager& mapManager);
 
 private:
 	const float initialHoodedPosX = 500.f;
@@ -26,6 +27,6 @@ private:
 
 	void InitVariables();
 	void InitHooded();
-	const void Move(Camera* camera, float deltaTime, sf::Sprite* sprite);
+	const void Move(Camera& camera, float deltaTime, MapManager& mapManager, sf::Sprite& sprite);
 };
 
