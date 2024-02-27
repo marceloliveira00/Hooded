@@ -31,8 +31,9 @@ void MapManager::Load(Level level)
 	m_mapTexture.loadFromFile("Assets/Maps/Village/TilesetGround.png");
 }
 
-bool MapManager::MapCollision(sf::Vector2f nextPosition, sf::Vector2i nextSize)
+bool MapManager::MapCollision(bool dematerialized, sf::Vector2f nextPosition, sf::Vector2i nextSize)
 {
+	if (dematerialized) return false;
 	const int bottom = (int)nextPosition.y + nextSize.y;
 	const int left = (int)nextPosition.x;
 	const int right = (int)nextPosition.x + nextSize.x;

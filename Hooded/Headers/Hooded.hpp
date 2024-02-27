@@ -16,10 +16,11 @@ public:
 	const void Update(Camera& camera, float deltaTime, MapManager& mapManager);
 
 private:
-	const float initialHoodedPosX = 500.f;
-	const float initialHoodedPosY = 300.f;
-	unsigned short tileHeight = DEFAULT_SPRITE_SIZE;
-	unsigned short tileWidth = DEFAULT_SPRITE_SIZE;
+	bool m_dematerialized = false;
+	const float m_initialHoodedPosX = 500.f;
+	const float m_initialHoodedPosY = 300.f;
+	unsigned short m_tileHeight = DEFAULT_SPRITE_SIZE;
+	unsigned short m_tileWidth = DEFAULT_SPRITE_SIZE;
 
 	sf::Sprite m_hooded;
 	sf::RectangleShape m_hoodedBoundingRectangle;
