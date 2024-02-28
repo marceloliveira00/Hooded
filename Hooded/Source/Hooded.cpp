@@ -30,40 +30,28 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager,
 	sf::Vector2f position = sprite.getPosition();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) m_dematerialized = !m_dematerialized;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !mapManager.MapCollision(m_dematerialized,
+		sf::Vector2f(position.x - 1 * m_speed * deltaTime, position.y), sprite.getTextureRect().getSize()))
 	{
-		if (!mapManager.MapCollision(m_dematerialized, sf::Vector2f(position.x - 1 * m_speed * deltaTime, position.y),
-			sprite.getTextureRect().getSize()))
-		{
-			// comment below flips the sprite but also generates a bug with collision
-			//sprite.setTextureRect(sf::IntRect(m_tileWidth, 0, -m_tileWidth, m_tileHeight));
-			sprite.setPosition(position.x - 1 * m_speed * deltaTime, position.y);
-		}
+		// comment below flips the sprite but also generates a bug with collision
+		//sprite.setTextureRect(sf::IntRect(m_tileWidth, 0, -m_tileWidth, m_tileHeight));
+		sprite.setPosition(position.x - 1 * m_speed * deltaTime, position.y);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !mapManager.MapCollision(m_dematerialized,
+		sf::Vector2f(position.x + 1 * m_speed * deltaTime, position.y), sprite.getTextureRect().getSize()))
 	{
-		if (!mapManager.MapCollision(m_dematerialized, sf::Vector2f(position.x + 1 * m_speed * deltaTime, position.y),
-			sprite.getTextureRect().getSize()))
-		{
-			sprite.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
-			sprite.setPosition(position.x + 1 * m_speed * deltaTime, position.y);
-		}
+		sprite.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
+		sprite.setPosition(position.x + 1 * m_speed * deltaTime, position.y);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !mapManager.MapCollision(m_dematerialized,
+		sf::Vector2f(position.x, position.y - 1 * m_speed * deltaTime), sprite.getTextureRect().getSize()))
 	{
-		if (!mapManager.MapCollision(m_dematerialized, sf::Vector2f(position.x, position.y - 1 * m_speed * deltaTime),
-			sprite.getTextureRect().getSize()))
-		{
-			sprite.setPosition(position.x, position.y - 1 * m_speed * deltaTime);
-		}
+		sprite.setPosition(position.x, position.y - 1 * m_speed * deltaTime);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !mapManager.MapCollision(m_dematerialized,
+		sf::Vector2f(position.x, position.y + 1 * m_speed * deltaTime), sprite.getTextureRect().getSize()))
 	{
-		if (!mapManager.MapCollision(m_dematerialized, sf::Vector2f(position.x, position.y + 1 * m_speed * deltaTime),
-			sprite.getTextureRect().getSize()))
-		{
-			sprite.setPosition(position.x, position.y + 1 * m_speed * deltaTime);
-		}
+		sprite.setPosition(position.x, position.y + 1 * m_speed * deltaTime);
 	}
 
 	m_hoodedBoundingRectangle.setPosition(position.x, position.y);
