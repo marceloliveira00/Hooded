@@ -32,15 +32,18 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager,
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) m_dematerialized = !m_dematerialized;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		if (!mapManager.MapCollision(m_dematerialized, sf::Vector2f(position.x - 1, position.y), sprite.getTextureRect().getSize()))
+		if (!mapManager.MapCollision(m_dematerialized, sf::Vector2f(position.x - 1 * m_speed * deltaTime, position.y),
+			sprite.getTextureRect().getSize()))
 		{
-			sprite.setTextureRect(sf::IntRect(m_tileWidth, 0, -m_tileWidth, m_tileHeight));
+			// comment below flips the sprite but also generates a bug with collision
+			//sprite.setTextureRect(sf::IntRect(m_tileWidth, 0, -m_tileWidth, m_tileHeight));
 			sprite.setPosition(position.x - 1 * m_speed * deltaTime, position.y);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		if (!mapManager.MapCollision(m_dematerialized, sf::Vector2f(position.x + 1, position.y), sprite.getTextureRect().getSize()))
+		if (!mapManager.MapCollision(m_dematerialized, sf::Vector2f(position.x + 1 * m_speed * deltaTime, position.y),
+			sprite.getTextureRect().getSize()))
 		{
 			sprite.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
 			sprite.setPosition(position.x + 1 * m_speed * deltaTime, position.y);
@@ -48,14 +51,16 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager,
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		if (!mapManager.MapCollision(m_dematerialized, sf::Vector2f(position.x, position.y - 1), sprite.getTextureRect().getSize()))
+		if (!mapManager.MapCollision(m_dematerialized, sf::Vector2f(position.x, position.y - 1 * m_speed * deltaTime),
+			sprite.getTextureRect().getSize()))
 		{
 			sprite.setPosition(position.x, position.y - 1 * m_speed * deltaTime);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		if (!mapManager.MapCollision(m_dematerialized, sf::Vector2f(position.x, position.y + 1), sprite.getTextureRect().getSize()))
+		if (!mapManager.MapCollision(m_dematerialized, sf::Vector2f(position.x, position.y + 1 * m_speed * deltaTime),
+			sprite.getTextureRect().getSize()))
 		{
 			sprite.setPosition(position.x, position.y + 1 * m_speed * deltaTime);
 		}

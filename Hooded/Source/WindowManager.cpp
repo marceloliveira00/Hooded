@@ -3,7 +3,6 @@
 WindowManager::WindowManager() : m_event(new sf::Event())
 {
 	m_camera = new Camera();
-	m_settings.antialiasingLevel = 8;
 
 	m_window = new sf::RenderWindow(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Hooded");
 	m_window->setFramerateLimit(FRAMERATE);

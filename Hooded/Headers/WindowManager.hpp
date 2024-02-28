@@ -21,7 +21,6 @@ private:
 	float timer = 0.f;
 
 	sf::Event* m_event;
-	sf::ContextSettings m_settings;
 
 	const void PollEvents() const;
 	const void SetCameraPos() const;

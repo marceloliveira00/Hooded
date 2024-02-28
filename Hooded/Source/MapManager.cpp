@@ -34,6 +34,7 @@ void MapManager::Load(Level level)
 bool MapManager::MapCollision(bool dematerialized, sf::Vector2f nextPosition, sf::Vector2i nextSize)
 {
 	if (dematerialized) return false;
+
 	const int bottom = (int)nextPosition.y + nextSize.y;
 	const int left = (int)nextPosition.x;
 	const int right = (int)nextPosition.x + nextSize.x;
@@ -51,7 +52,7 @@ bool MapManager::MapCollision(bool dematerialized, sf::Vector2f nextPosition, sf
 	if (std::find(m_tiles.begin(), m_tiles.end(), bottomLeft) == m_tiles.end()) m_tiles.push_back(bottomLeft);
 	if (std::find(m_tiles.begin(), m_tiles.end(), bottomRight) == m_tiles.end()) m_tiles.push_back(bottomRight);
 
-	for (unsigned i = 0; i < m_tiles.size(); i++)
+	for (unsigned short i = 0; i < m_tiles.size(); i++)
 	{
 		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::Empty) continue;
 
