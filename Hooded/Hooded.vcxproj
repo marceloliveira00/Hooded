@@ -31,7 +31,6 @@
     <ClInclude Include="Headers\MapManager.hpp" />
     <ClInclude Include="Headers\WindowManager.hpp" />
     <ClInclude Include="Headers\Enums\Level.hpp" />
-    <ClInclude Include="Headers\Gravity.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Entities\Hooded.png" />
@@ -48,7 +47,6 @@
     <ClCompile Include="Source\DrawMap.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\GameManager.cpp" />
-    <ClCompile Include="Source\Gravity.cpp" />
     <ClCompile Include="Source\Hooded.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MapManager.cpp" />

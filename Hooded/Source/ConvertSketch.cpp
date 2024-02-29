@@ -14,14 +14,12 @@ void ConvertSketch(Map* map, sf::Image mapSketch, unsigned mapSketch_X, unsigned
 			if (y > mapHeight) continue;
 
 			sf::Color pixel = mapSketch.getPixel(x, y);
-			if (pixel == sf::Color(0, 0, 0))
-			{
-				(*map)[x][y] = Cell::Grass;
-			}
-			else
-			{
-				(*map)[x][y] = Cell::Empty;
-			}
+
+			if (pixel == sf::Color(127, 127, 127)) (*map)[x][y] = Cell::MapBoundary;
+
+			if (pixel == sf::Color(0, 0, 0)) (*map)[x][y] = Cell::Grass;
+
+			else(*map)[x][y] = Cell::Empty;
 		}
 	}
 }

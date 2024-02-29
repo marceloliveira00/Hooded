@@ -17,9 +17,11 @@ public:
 
 private:
 	bool m_dematerialized = false;
+	const unsigned short m_gravity = 1.f;
 	const float m_initialHoodedPosX = 500.f;
-	const float m_initialHoodedPosY = 300.f;
+	const float m_initialHoodedPosY = 200.f;
 	const unsigned short m_jumpSpeed = 1.1;
+	bool m_onGround = false;
 	unsigned short m_tileHeight = DEFAULT_SPRITE_SIZE;
 	unsigned short m_tileWidth = DEFAULT_SPRITE_SIZE;
 
@@ -29,6 +31,7 @@ private:
 
 	void InitVariables();
 	void InitHooded();
+	const void Dematerialize();
 	const void Move(Camera& camera, float deltaTime, MapManager& mapManager, sf::Sprite& sprite);
 };
 

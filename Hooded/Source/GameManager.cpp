@@ -1,5 +1,4 @@
 #include "../Headers/GameManager.hpp"
-#include "../Assets/Maps/LevelSketch.hpp"
 
 GameManager::GameManager()
 {

@@ -10,6 +10,33 @@ const void MapManager::Update()
 
 }
 
+bool MapManager::SpriteOnGround(sf::Vector2f position, sf::Vector2i size)
+{
+	const int bottom = (int)position.y + size.y;
+	const int left = (int)position.x;
+	const int right = (int)position.x + size.x;
+
+	sf::Vector2i bottomLeft(sf::Vector2i(left / DEFAULT_SPRITE_SIZE, bottom / DEFAULT_SPRITE_SIZE));
+	sf::Vector2i bottomRight(sf::Vector2i(right / DEFAULT_SPRITE_SIZE, bottom / DEFAULT_SPRITE_SIZE));
+
+	m_tiles.clear();
+
+	if (std::find(m_tiles.begin(), m_tiles.end(), bottomLeft) == m_tiles.end()) m_tiles.push_back(bottomLeft);
+	if (std::find(m_tiles.begin(), m_tiles.end(), bottomRight) == m_tiles.end()) m_tiles.push_back(bottomRight);
+
+	for (unsigned short i = 0; i < m_tiles.size(); i++)
+	{
+		// Checks if the player is touching the ground
+		if ((*m_map)[bottomLeft.x][bottomLeft.y] == Cell::Grass ||
+			(*m_map)[bottomRight.x][bottomRight.y] == Cell::Grass)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 MapManager::MapManager()
 {
 	m_map = new Map();
@@ -31,7 +58,7 @@ void MapManager::Load(Level level)
 	m_mapTexture.loadFromFile("Assets/Maps/Village/TilesetGround.png");
 }
 
-bool MapManager::MapCollision(bool dematerialized, sf::Vector2f nextPosition, sf::Vector2i nextSize)
+bool MapManager::MapCollision(sf::Vector2f nextPosition, sf::Vector2i nextSize, bool dematerialized)
 {
 	if (dematerialized) return false;
 
@@ -55,6 +82,8 @@ bool MapManager::MapCollision(bool dematerialized, sf::Vector2f nextPosition, sf
 	for (unsigned short i = 0; i < m_tiles.size(); i++)
 	{
 		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::Empty) continue;
+
+		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::MapBoundary) return true;
 
 		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::Grass) return true;
 	}

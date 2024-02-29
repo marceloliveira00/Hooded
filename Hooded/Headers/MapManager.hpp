@@ -17,7 +17,8 @@ public:
 	~MapManager();
 
 	void Load(Level level);
-	bool MapCollision(bool dematerialized, sf::Vector2f nextPosition, sf::Vector2i nextSize);
+	bool MapCollision(sf::Vector2f nextPosition, sf::Vector2i nextSize, bool dematerialized = false);
+	bool SpriteOnGround(sf::Vector2f position, sf::Vector2i size);
 	const void Render(sf::RenderTarget* target);
 	const void Update();
 

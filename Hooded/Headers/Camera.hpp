@@ -7,7 +7,7 @@
 class Camera
 {
 public:
-	Camera(float zoomLevel = 195.f);
+	Camera(float zoomLevel = 190.f);
 
 	const sf::View GetCameraView() const;
 	const void SetPosition(const float posX, const float posY);
