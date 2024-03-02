@@ -10,11 +10,11 @@ const void MapManager::Update()
 
 }
 
-bool MapManager::SpriteOnGround(sf::Vector2f position, sf::Vector2i size)
+bool MapManager::SpriteOnGround(float posX, float posY, sf::Vector2i size)
 {
-	const int bottom = (int)position.y + size.y;
-	const int left = (int)position.x;
-	const int right = (int)position.x + size.x;
+	const int bottom = (int)posY + size.y;
+	const int left = (int)posX;
+	const int right = (int)posX + size.x;
 
 	sf::Vector2i bottomLeft(sf::Vector2i(left / DEFAULT_SPRITE_SIZE, bottom / DEFAULT_SPRITE_SIZE));
 	sf::Vector2i bottomRight(sf::Vector2i(right / DEFAULT_SPRITE_SIZE, bottom / DEFAULT_SPRITE_SIZE));
@@ -58,14 +58,14 @@ void MapManager::Load(Level level)
 	m_mapTexture.loadFromFile("Assets/Maps/Village/TilesetGround.png");
 }
 
-bool MapManager::MapCollision(sf::Vector2f nextPosition, sf::Vector2i nextSize, bool dematerialized)
+bool MapManager::MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextSize, bool dematerialized)
 {
 	if (dematerialized) return false;
 
-	const int bottom = (int)nextPosition.y + nextSize.y;
-	const int left = (int)nextPosition.x;
-	const int right = (int)nextPosition.x + nextSize.x;
-	const int top = (int)nextPosition.y;
+	const int bottom = (int)nextPosY + nextSize.y;
+	const int left = (int)nextPosX;
+	const int right = (int)nextPosX + nextSize.x;
+	const int top = (int)nextPosY;
 
 	sf::Vector2i topLeft(sf::Vector2i(left / DEFAULT_SPRITE_SIZE, top / DEFAULT_SPRITE_SIZE));
 	sf::Vector2i topRight(sf::Vector2i(right / DEFAULT_SPRITE_SIZE, top / DEFAULT_SPRITE_SIZE));
