@@ -20,8 +20,8 @@ private:
 	const unsigned short m_gravity = 1.f;
 	const float m_initialHoodedPosX = 500.f;
 	const float m_initialHoodedPosY = 200.f;
-	bool m_isJumping = false;
-	const unsigned short m_jumpSpeed = 2.f;
+	float m_jumpPosY = 0.f;
+	float m_jumpSpeed = 0.2f;
 	bool m_onGround = false;
 	unsigned short m_tileHeight = DEFAULT_SPRITE_SIZE;
 	unsigned short m_tileWidth = DEFAULT_SPRITE_SIZE;

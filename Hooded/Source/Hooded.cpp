@@ -36,15 +36,15 @@ Hooded::Hooded()
 const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager, sf::Sprite& sprite)
 {
 	// Gravity
-	if (!mapManager.SpriteOnGround(m_posX, m_posY + m_gravity * m_speed * deltaTime, sprite.getTextureRect().getSize()))
+	if (mapManager.SpriteOnGround(m_posX, m_posY + m_gravity * m_speed * deltaTime, sprite.getTextureRect().getSize()))
 	{
-		m_posY += m_gravity * m_speed * deltaTime;
-		m_onGround = false;
+		m_onGround = true;
+		m_jumpPosY = 0.f;
 	}
 	else
 	{
-		m_onGround = true;
-		m_isJumping = false;
+		m_posY += m_gravity * m_speed * deltaTime;
+		m_onGround = false;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !mapManager.MapCollision(m_posX - 1 * m_speed * deltaTime, m_posY,
@@ -60,16 +60,20 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager,
 		//sprite.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
 		m_posX += 1 * m_speed * deltaTime;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !mapManager.MapCollision(m_posX, m_posY - 1 * m_speed * deltaTime,
-		sprite.getTextureRect().getSize(), m_dematerialized))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !mapManager.MapCollision(m_posX, m_posY + m_jumpSpeed + m_jumpPosY,
+		sprite.getTextureRect().getSize(), m_dematerialized) && m_onGround || m_jumpPosY != 0.f && m_jumpPosY < 5.f)
 	{
-		m_posY -= m_gravity + m_jumpSpeed * m_speed * deltaTime;
-		m_isJumping = true;
+		if (m_jumpPosY == 0) m_jumpPosY += m_gravity;
+
+		m_jumpPosY += m_jumpSpeed;
+
+		m_posY -= m_jumpPosY;
+		m_onGround = false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !mapManager.MapCollision(m_posX, m_posY + 1 * m_speed * deltaTime,
 		sprite.getTextureRect().getSize(), m_dematerialized))
 	{
-		m_posY += 1 * m_speed - m_speed * deltaTime;
+		m_posY += 1 * m_speed * deltaTime;
 	}
 
 	m_hoodedBoundingRectangle.setPosition(m_posX, m_posY);
