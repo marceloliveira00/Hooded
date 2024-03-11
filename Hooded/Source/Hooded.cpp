@@ -60,7 +60,7 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager,
 		//sprite.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
 		m_posX += 1 * m_speed * deltaTime;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !mapManager.MapCollision(m_posX, m_posY + m_jumpSpeed + m_jumpPosY,
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !mapManager.MapCollision(m_posX, m_posY - 1 * m_speed * deltaTime,
 		sprite.getTextureRect().getSize(), m_dematerialized) && m_onGround || m_jumpPosY != 0.f && m_jumpPosY < 5.f)
 	{
 		if (m_jumpPosY == 0) m_jumpPosY += m_gravity;
