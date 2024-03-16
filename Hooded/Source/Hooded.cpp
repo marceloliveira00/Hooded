@@ -48,16 +48,21 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
 		m_onGround = false;
 	}
 
+	int textureIndex = 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !mapManager.MapCollision(m_posX - 1 * m_speed * deltaTime, m_posY,
 		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized))
 	{
-		m_hooded.setTextureRect(sf::IntRect(GetTextureIndex(10, 8) + 32, m_tileHeight * 3, -m_tileWidth, m_tileHeight));
+		if (m_onGround) textureIndex = GetTextureIndex(10, 8);
+
+		m_hooded.setTextureRect(sf::IntRect(textureIndex + 32, m_tileHeight * 3, -m_tileWidth, m_tileHeight));
 		m_posX -= 1 * m_speed * deltaTime;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !mapManager.MapCollision(m_posX + 1 * m_speed * deltaTime, m_posY,
 		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized))
 	{
-		m_hooded.setTextureRect(sf::IntRect(GetTextureIndex(10, 8), m_tileHeight * 3, m_tileWidth, m_tileHeight));
+		if (m_onGround) textureIndex = GetTextureIndex(10, 8);
+
+		m_hooded.setTextureRect(sf::IntRect(textureIndex, m_tileHeight * 3, m_tileWidth, m_tileHeight));
 		m_posX += 1 * m_speed * deltaTime;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !mapManager.MapCollision(m_posX, m_posY - 1 * m_speed * deltaTime,
