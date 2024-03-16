@@ -74,7 +74,7 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
 		m_posX += 1 * m_speed * deltaTime;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !mapManager.MapCollision(m_posX, m_posY - 1 * m_speed * deltaTime,
-		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_onGround || m_jumpPosY != 0.f && m_jumpPosY < 5.f)
+		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_onGround || m_jumpPosY != 0.f && m_jumpPosY < 2.f)
 	{
 		if (m_jumpPosY == 0) m_jumpPosY += m_gravity;
 

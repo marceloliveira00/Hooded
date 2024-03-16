@@ -21,7 +21,7 @@ private:
 	const float m_initialHoodedPosX = 500.f;
 	const float m_initialHoodedPosY = 200.f;
 	float m_jumpPosY = 0.f;
-	float m_jumpSpeed = 0.2f;
+	float m_jumpSpeed = 0.02f;
 	bool m_onGround = false;
 	unsigned short m_tileHeight = DEFAULT_SPRITE_SIZE_X_Y;
 	unsigned short m_tileWidth = DEFAULT_SPRITE_SIZE_X_Y;
