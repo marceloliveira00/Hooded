@@ -1,7 +1,5 @@
 #include "../Headers/Hooded.hpp"
 
-#include <iostream>
-
 void Hooded::InitVariables()
 {
 	m_health = 100.f;
@@ -50,27 +48,16 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
 		m_onGround = false;
 	}
 
-	int textureIndex = 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !mapManager.MapCollision(m_posX - 1 * m_speed * deltaTime, m_posY,
 		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized))
 	{
-		textureIndex = 0;
-		textureIndex = (int)m_posX / 10 % 8;
-		textureIndex *= m_tileWidth;
-
-		m_hooded.setTextureRect(sf::IntRect(textureIndex + 32, m_tileHeight * 3, -m_tileWidth, m_tileHeight));
-		std::cout << "textureIndex: " << textureIndex << std::endl;
+		m_hooded.setTextureRect(sf::IntRect(GetTextureIndex(10, 8) + 32, m_tileHeight * 3, -m_tileWidth, m_tileHeight));
 		m_posX -= 1 * m_speed * deltaTime;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !mapManager.MapCollision(m_posX + 1 * m_speed * deltaTime, m_posY,
 		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized))
 	{
-		textureIndex = 0;
-		textureIndex = (int)m_posX / 10 % 8;
-		textureIndex *= m_tileWidth;
-
-		m_hooded.setTextureRect(sf::IntRect(textureIndex, m_tileHeight * 3, m_tileWidth, m_tileHeight));
-		std::cout << "textureIndex: " << textureIndex << std::endl;
+		m_hooded.setTextureRect(sf::IntRect(GetTextureIndex(10, 8), m_tileHeight * 3, m_tileWidth, m_tileHeight));
 		m_posX += 1 * m_speed * deltaTime;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !mapManager.MapCollision(m_posX, m_posY - 1 * m_speed * deltaTime,
@@ -105,4 +92,9 @@ const void Hooded::Update(Camera& camera, float deltaTime, MapManager& mapManage
 {
 	Dematerialize();
 	Move(camera, deltaTime, mapManager);
+}
+
+const int Hooded::GetTextureIndex(unsigned short frames, short tiles) const
+{
+	return ((int)m_posX / frames % tiles) * m_tileWidth;
 }
