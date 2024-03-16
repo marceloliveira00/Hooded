@@ -18,7 +18,7 @@ WindowManager::~WindowManager()
 void WindowManager::Update(float deltaTime)
 {
 	PollEvents();
-	SetFPS(deltaTime);
+	//SetFPS(deltaTime);
 	SetCameraPos();
 }
 

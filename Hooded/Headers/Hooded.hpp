@@ -23,8 +23,8 @@ private:
 	float m_jumpPosY = 0.f;
 	float m_jumpSpeed = 0.2f;
 	bool m_onGround = false;
-	unsigned short m_tileHeight = DEFAULT_SPRITE_SIZE;
-	unsigned short m_tileWidth = DEFAULT_SPRITE_SIZE;
+	unsigned short m_tileHeight = DEFAULT_SPRITE_SIZE_X_Y;
+	unsigned short m_tileWidth = DEFAULT_SPRITE_SIZE_X_Y;
 
 	sf::Sprite m_hooded;
 	sf::RectangleShape m_hoodedBoundingRectangle;
@@ -33,6 +33,6 @@ private:
 	void InitVariables();
 	void InitHooded();
 	const void Dematerialize();
-	const void Move(Camera& camera, float deltaTime, MapManager& mapManager, sf::Sprite& sprite);
+	const void Move(Camera& camera, float deltaTime, MapManager& mapManager);
 };
 

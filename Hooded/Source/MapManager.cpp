@@ -16,8 +16,8 @@ bool MapManager::SpriteOnGround(float posX, float posY, sf::Vector2i size)
 	const int left = (int)posX;
 	const int right = (int)posX + size.x;
 
-	sf::Vector2i bottomLeft(sf::Vector2i(left / DEFAULT_SPRITE_SIZE, bottom / DEFAULT_SPRITE_SIZE));
-	sf::Vector2i bottomRight(sf::Vector2i(right / DEFAULT_SPRITE_SIZE, bottom / DEFAULT_SPRITE_SIZE));
+	sf::Vector2i bottomLeft(sf::Vector2i(left / DEFAULT_SPRITE_SIZE_X_Y, bottom / DEFAULT_SPRITE_SIZE_X_Y));
+	sf::Vector2i bottomRight(sf::Vector2i(right / DEFAULT_SPRITE_SIZE_X_Y, bottom / DEFAULT_SPRITE_SIZE_X_Y));
 
 	m_tiles.clear();
 
@@ -67,10 +67,10 @@ bool MapManager::MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextS
 	const int right = (int)nextPosX + nextSize.x;
 	const int top = (int)nextPosY;
 
-	sf::Vector2i topLeft(sf::Vector2i(left / DEFAULT_SPRITE_SIZE, top / DEFAULT_SPRITE_SIZE));
-	sf::Vector2i topRight(sf::Vector2i(right / DEFAULT_SPRITE_SIZE, top / DEFAULT_SPRITE_SIZE));
-	sf::Vector2i bottomLeft(sf::Vector2i(left / DEFAULT_SPRITE_SIZE, bottom / DEFAULT_SPRITE_SIZE));
-	sf::Vector2i bottomRight(sf::Vector2i(right / DEFAULT_SPRITE_SIZE, bottom / DEFAULT_SPRITE_SIZE));
+	sf::Vector2i topLeft(sf::Vector2i(left / DEFAULT_SPRITE_SIZE_X_Y, top / DEFAULT_SPRITE_SIZE_X_Y));
+	sf::Vector2i topRight(sf::Vector2i(right / DEFAULT_SPRITE_SIZE_X_Y, top / DEFAULT_SPRITE_SIZE_X_Y));
+	sf::Vector2i bottomLeft(sf::Vector2i(left / DEFAULT_SPRITE_SIZE_X_Y, bottom / DEFAULT_SPRITE_SIZE_X_Y));
+	sf::Vector2i bottomRight(sf::Vector2i(right / DEFAULT_SPRITE_SIZE_X_Y, bottom / DEFAULT_SPRITE_SIZE_X_Y));
 
 	m_tiles.clear();
 
