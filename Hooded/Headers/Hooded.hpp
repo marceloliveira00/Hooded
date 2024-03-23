@@ -18,7 +18,7 @@ public:
 private:
 	bool m_dematerialized = false;
 	const float m_gravity = 1.f;
-	const float m_initialHoodedPosX = 300.f;
+	const float m_initialHoodedPosX = 250.f;
 	const float m_initialHoodedPosY = 1080.f;
 	float m_jumpPosY = 0.f;
 	float m_jumpSpeed = 0.02f;

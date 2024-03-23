@@ -8,9 +8,9 @@ void DrawMap(const Map* map, sf::Image* mapSketch, sf::Texture* mapTexture, sf::
 
 	sf::Sprite cellSprite(*mapTexture);
 
-	for (unsigned short x = 0; x < mapSketch->getSize().x; x++)
+	for (unsigned short x = 0; x < mapSketch->getSize().x; ++x)
 	{
-		for (unsigned short y = 0; y < mapSketch->getSize().y; y++)
+		for (unsigned short y = 0; y < mapSketch->getSize().y; ++y)
 		{
 			// ignoring the empty pixels.
 			if ((*map)[x][y] == Cell::Empty) continue;
@@ -28,6 +28,9 @@ void DrawMap(const Map* map, sf::Image* mapSketch, sf::Texture* mapTexture, sf::
 			{
 				if (x > 0 && (*map)[x - 1][y] == Cell::Grass)
 					sprite_X = 1;
+				if ((*map)[x + 1][y] != Cell::Grass)
+					sprite_X = 2;
+
 				if (y > 0 && (*map)[x][y - 1] == Cell::Grass)
 					sprite_Y = 1;
 				if ((*map)[x][y + 1] != Cell::Grass)
