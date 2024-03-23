@@ -19,8 +19,7 @@ public:
 	void Load(Level level);
 	bool MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextSize, bool dematerialized = false);
 	bool SpriteOnGround(float posX, float posY, sf::Vector2i size);
-	const void Render(sf::RenderTarget* target);
-	const void Update();
+	const void Render(sf::RenderTarget& target);
 
 private:
 	sf::Sprite m_cellSprite;

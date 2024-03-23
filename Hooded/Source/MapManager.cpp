@@ -1,13 +1,8 @@
 #include "../Headers/MapManager.hpp"
 
-const void MapManager::Render(sf::RenderTarget* target)
+const void MapManager::Render(sf::RenderTarget& target)
 {
-	DrawMap(m_map, &m_mapSketch, &m_mapTexture, target, 0);
-}
-
-const void MapManager::Update()
-{
-
+	DrawMap(m_map, &m_mapSketch, &m_mapTexture, target);
 }
 
 bool MapManager::SpriteOnGround(float posX, float posY, sf::Vector2i size)

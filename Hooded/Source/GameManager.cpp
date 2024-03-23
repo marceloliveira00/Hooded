@@ -20,7 +20,7 @@ void GameManager::Render()
 {
 	m_windowManager->m_window->clear(sf::Color(27, 27, 83));
 
-	m_mapManager->Render(m_windowManager->m_window);
+	m_mapManager->Render(*m_windowManager->m_window);
 	m_hooded->Render(m_windowManager->m_window);
 
 	m_windowManager->m_window->display();
@@ -36,8 +36,6 @@ void GameManager::Update()
 	m_deltaTime = (float)m_clock.restart().asMilliseconds(); // Updates delta time
 
 	m_windowManager->Update(m_deltaTime);
-
-	m_mapManager->Update();
 
 	m_hooded->Update(*m_windowManager->m_camera, m_deltaTime, *m_mapManager);
 }

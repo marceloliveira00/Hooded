@@ -13,4 +13,4 @@ constexpr unsigned short SCREEN_WIDTH = 1920;
 
 constexpr float GRAVITY = 0.3f;
 
-typedef std::vector<std::array<Cell, SCREEN_HEIGHT / DEFAULT_SPRITE_SIZE_X_Y>> Map;
+typedef std::vector<std::array<Cell, SCREEN_HEIGHT>> Map;
