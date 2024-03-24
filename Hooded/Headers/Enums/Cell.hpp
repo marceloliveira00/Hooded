@@ -3,7 +3,8 @@
 enum Cell : unsigned short
 {
 	Empty,
-	MapBoundary,
 	Grass,
+	Hill,
+	MapBoundary,
 	Wall
 };

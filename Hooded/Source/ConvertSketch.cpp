@@ -13,9 +13,11 @@ void ConvertSketch(Map* map, sf::Image mapSketch, unsigned mapSketch_X, unsigned
 
 			if (pixel == sf::Color(127, 127, 127)) (*map)[x][y] = Cell::MapBoundary;
 
-			if (pixel == sf::Color(0, 0, 0)) (*map)[x][y] = Cell::Grass;
+			else if (pixel == sf::Color(34, 177, 76)) (*map)[x][y] = Cell::Grass;
 
-			else(*map)[x][y] = Cell::Empty;
+			else if (pixel == sf::Color(185, 122, 87)) (*map)[x][y] = Cell::Hill;
+
+			else (*map)[x][y] = Cell::Empty;
 		}
 	}
 }

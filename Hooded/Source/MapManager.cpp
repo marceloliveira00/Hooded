@@ -22,8 +22,8 @@ bool MapManager::SpriteOnGround(float posX, float posY, sf::Vector2i size)
 	for (unsigned short i = 0; i < m_tiles.size(); i++)
 	{
 		// Checks if the player is touching the ground
-		if ((*m_map)[bottomLeft.x][bottomLeft.y] == Cell::Grass ||
-			(*m_map)[bottomRight.x][bottomRight.y] == Cell::Grass)
+		if ((*m_map)[bottomLeft.x][bottomLeft.y] == Cell::Grass || (*m_map)[bottomRight.x][bottomRight.y] == Cell::Grass ||
+			(*m_map)[bottomLeft.x][bottomLeft.y] == Cell::Hill || (*m_map)[bottomRight.x][bottomRight.y] == Cell::Hill)
 		{
 			return true;
 		}
@@ -78,9 +78,11 @@ bool MapManager::MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextS
 	{
 		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::Empty) continue;
 
-		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::MapBoundary) return true;
-
 		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::Grass) return true;
+
+		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::Hill) return true;
+
+		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::MapBoundary) return true;
 	}
 
 	return false;
