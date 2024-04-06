@@ -18,13 +18,14 @@ public:
 
 	void Load(Level level);
 	bool MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextSize, bool dematerialized = false);
-	bool SpriteOnGround(float posX, float posY, sf::Vector2i size);
 	const void Render(sf::RenderTarget& target);
+	bool SpriteOnGround(float posX, float posY, sf::Vector2i size);
 
 private:
 	sf::Sprite m_cellSprite;
 	sf::Image m_mapSketch;
 	sf::Texture m_mapTexture;
+	sf::Texture m_mapPropsTexture;
 	std::vector<sf::Vector2i> m_tiles;
 };
 
