@@ -9,5 +9,12 @@ enum Cell : unsigned short
 	Grass,
 	Hill,
 	MapBoundary,
-	Wall
+	Wall,
+
+	SmallBush,
+	TallBush,
+	BigBush,
+
+	SmallTree,
+	TallTree
 };

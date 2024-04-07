@@ -12,6 +12,53 @@ static bool DrawMapProps(const Map* map, unsigned short x, unsigned short y, uns
 		return true;
 	}
 
+	else if ((*map)[x][y] == Cell::SmallBush)
+	{
+		pixelX = 356;
+		pixelY = 579;
+		spriteX = 57;
+		spriteY = 29;
+
+		return true;
+	}
+	else if ((*map)[x][y] == Cell::TallBush)
+	{
+		pixelX = 452;
+		pixelY = 573;
+		spriteX = 89;
+		spriteY = 36;
+
+		return true;
+	}
+	else if ((*map)[x][y] == Cell::BigBush)
+	{
+		pixelX = 576;
+		pixelY = 572;
+		spriteX = 95;
+		spriteY = 37;
+
+		return true;
+	}
+
+	else if ((*map)[x][y] == Cell::SmallTree)
+	{
+		pixelX = 576;
+		pixelY = 572;
+		spriteX = 95;
+		spriteY = 37;
+
+		return true;
+	}
+	else if ((*map)[x][y] == Cell::TallTree)
+	{
+		pixelX = 831;
+		pixelY = 447;
+		spriteX = 153;
+		spriteY = 162;
+
+		return true;
+	}
+
 	return false;
 }
 
