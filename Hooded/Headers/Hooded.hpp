@@ -6,6 +6,8 @@
 #include "../Headers/Entity.hpp"
 #include "../Headers/GameConfig.hpp"
 #include "../Headers/MapManager.hpp"
+#include "../Headers/Enums/EntityDirection.hpp"
+#include "../Headers/Enums/EntityStatus.hpp"
 
 class Hooded : protected Entity
 {
@@ -17,12 +19,13 @@ public:
 
 private:
 	bool m_dematerialized = false;
+	EntityDirection m_hoodedDirection = EntityDirection::Right;
 	const float m_gravity = 1.f;
+	EntityStatus m_hoodedStatus = EntityStatus::Idle;
 	const float m_initialHoodedPosX = 250.f;
 	const float m_initialHoodedPosY = 1080.f;
 	float m_jumpPosY = 0.f;
 	float m_jumpSpeed = 0.02f;
-	bool m_onGround = false;
 	unsigned short m_tileHeight = DEFAULT_SPRITE_SIZE_X_Y;
 	unsigned short m_tileWidth = DEFAULT_SPRITE_SIZE_X_Y;
 

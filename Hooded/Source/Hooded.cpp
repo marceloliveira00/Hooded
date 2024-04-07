@@ -36,50 +36,63 @@ Hooded::Hooded()
 
 const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
 {
+	m_hoodedStatus = EntityStatus::Idle;
+
 	// Gravity
 	if (mapManager.SpriteOnGround(m_posX, m_posY + m_gravity * m_speed * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight)))
 	{
-		m_onGround = true;
 		m_jumpPosY = 0.f;
 	}
 	else
 	{
 		m_posY += m_gravity * m_speed * deltaTime;
-		m_onGround = false;
+		m_hoodedStatus = EntityStatus::Jumping;
 	}
 
-	int textureIndex = 0;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !mapManager.MapCollision(m_posX - 1 * m_speed * deltaTime, m_posY,
-		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized))
-	{
-		if (m_onGround) textureIndex = GetTextureIndex(10, 8);
-
-		m_hooded.setTextureRect(sf::IntRect(textureIndex + 32, m_tileHeight * 3, -m_tileWidth, m_tileHeight));
-		m_posX -= 1 * m_speed * deltaTime;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !mapManager.MapCollision(m_posX + 1 * m_speed * deltaTime, m_posY,
-		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized))
-	{
-		if (m_onGround) textureIndex = GetTextureIndex(10, 8);
-
-		m_hooded.setTextureRect(sf::IntRect(textureIndex, m_tileHeight * 3, m_tileWidth, m_tileHeight));
-		m_posX += 1 * m_speed * deltaTime;
-	}
+	unsigned short textureIndex = 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !mapManager.MapCollision(m_posX, m_posY - 1 * m_speed * deltaTime,
-		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_onGround || m_jumpPosY != 0.f && m_jumpPosY < 2.f)
+		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_hoodedStatus != EntityStatus::Jumping || m_jumpPosY != 0.f && m_jumpPosY < 2.f)
 	{
 		if (m_jumpPosY == 0) m_jumpPosY += m_gravity;
 
 		m_jumpPosY += m_jumpSpeed;
 
 		m_posY -= m_jumpPosY;
-		m_onGround = false;
+		m_hoodedStatus = EntityStatus::Jumping;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !mapManager.MapCollision(m_posX, m_posY + 1 * m_speed * deltaTime,
-		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		m_hooded.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
-		m_posY += 1 * m_speed * deltaTime;
+		if (m_hoodedStatus != EntityStatus::Jumping) textureIndex = GetTextureIndex(10, 4);
+
+		if (m_hoodedDirection == EntityDirection::Right) m_hooded.setTextureRect(sf::IntRect(textureIndex, m_tileHeight * 4, m_tileWidth, m_tileHeight));
+		else if (m_hoodedDirection == EntityDirection::Left) m_hooded.setTextureRect(sf::IntRect(textureIndex + 32, m_tileHeight * 4, -m_tileWidth, m_tileHeight));
+		m_hoodedStatus = EntityStatus::Crouching;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !mapManager.MapCollision(m_posX - 1 * m_speed * deltaTime, m_posY,
+		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_hoodedStatus != EntityStatus::Crouching)
+	{
+		if (m_hoodedStatus != EntityStatus::Jumping) textureIndex = GetTextureIndex(10, 8);
+
+		m_hooded.setTextureRect(sf::IntRect(textureIndex + 32, m_tileHeight * 3, -m_tileWidth, m_tileHeight));
+		m_posX -= 1 * m_speed * deltaTime;
+		m_hoodedDirection = EntityDirection::Left;
+		m_hoodedStatus = EntityStatus::Moving;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !mapManager.MapCollision(m_posX + 1 * m_speed * deltaTime, m_posY,
+		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_hoodedStatus != EntityStatus::Crouching)
+	{
+		if (m_hoodedStatus != EntityStatus::Jumping) textureIndex = GetTextureIndex(10, 8);
+
+		m_hooded.setTextureRect(sf::IntRect(textureIndex, m_tileHeight * 3, m_tileWidth, m_tileHeight));
+		m_posX += 1 * m_speed * deltaTime;
+		m_hoodedDirection = EntityDirection::Right;
+		m_hoodedStatus = EntityStatus::Moving;
+	}
+
+	if (m_hoodedStatus == EntityStatus::Idle)
+	{
+		if (m_hoodedDirection == EntityDirection::Right) m_hooded.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
+		else if (m_hoodedDirection == EntityDirection::Left) m_hooded.setTextureRect(sf::IntRect(32, 0, -m_tileWidth, m_tileHeight));
 	}
 
 	m_hoodedBoundingRectangle.setPosition(m_posX, m_posY);
