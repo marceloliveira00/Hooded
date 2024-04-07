@@ -1,5 +1,20 @@
 #include "../Headers/DrawMap.hpp"
 
+static bool DrawMapProps(const Map* map, unsigned short x, unsigned short y, unsigned short& pixelX, unsigned short& pixelY, unsigned short& spriteX, unsigned short& spriteY)
+{
+	if ((*map)[x][y] == Cell::Box)
+	{
+		pixelX = 42;
+		pixelY = 19;
+		spriteX = 45;
+		spriteY = 45;
+
+		return true;
+	}
+
+	return false;
+}
+
 void DrawMap(const Map* map, sf::Image& mapSketch, sf::Texture& mapTexture, sf::Texture& mapPropsTexture, sf::RenderTarget& target)
 {
 	// only draw the part of the map that is visible on the screen.
@@ -22,6 +37,7 @@ void DrawMap(const Map* map, sf::Image& mapSketch, sf::Texture& mapTexture, sf::
 			if (DrawMapProps(map, x, y, rectLeft, rectTop, spriteWidth, spriteHeight))
 			{
 				cellSprite.setTexture(mapPropsTexture);
+
 				// subtracting the sprite size is necessary since some sprites may not have the default sprite size
 				cellSprite.setPosition((float)DEFAULT_SPRITE_SIZE_X_Y * x + DEFAULT_SPRITE_SIZE_X_Y - spriteWidth, (float)DEFAULT_SPRITE_SIZE_X_Y * y + DEFAULT_SPRITE_SIZE_X_Y - spriteHeight);
 				cellSprite.setTextureRect(sf::IntRect(rectLeft, rectTop, spriteWidth, spriteHeight));
