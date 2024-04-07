@@ -33,7 +33,7 @@ Hooded::Hooded()
 	InitVariables();
 	InitHooded();
 }
-
+#include <iostream>
 const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
 {
 	m_hoodedStatus = EntityStatus::Idle;
@@ -49,10 +49,11 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
 		m_hoodedStatus = EntityStatus::Jumping;
 	}
 
-	unsigned short textureIndex = 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !mapManager.MapCollision(m_posX, m_posY - 1 * m_speed * deltaTime,
 		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_hoodedStatus != EntityStatus::Jumping || m_jumpPosY != 0.f && m_jumpPosY < 2.f)
 	{
+		m_textureIndex = 0;
+
 		if (m_jumpPosY == 0) m_jumpPosY += m_gravity;
 
 		m_jumpPosY += m_jumpSpeed;
@@ -62,18 +63,19 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		if (m_hoodedStatus != EntityStatus::Jumping) textureIndex = GetTextureIndex(10, 4);
+		if (m_hoodedStatus != EntityStatus::Jumping) m_textureIndex = GetTextureIndex(100, 4, false);
 
-		if (m_hoodedDirection == EntityDirection::Right) m_hooded.setTextureRect(sf::IntRect(textureIndex, m_tileHeight * 4, m_tileWidth, m_tileHeight));
-		else if (m_hoodedDirection == EntityDirection::Left) m_hooded.setTextureRect(sf::IntRect(textureIndex + 32, m_tileHeight * 4, -m_tileWidth, m_tileHeight));
+		if (m_hoodedDirection == EntityDirection::Right) m_hooded.setTextureRect(sf::IntRect(m_textureIndex, m_tileHeight * 4, m_tileWidth, m_tileHeight));
+		else if (m_hoodedDirection == EntityDirection::Left) m_hooded.setTextureRect(sf::IntRect(m_textureIndex + 32, m_tileHeight * 4, -m_tileWidth, m_tileHeight));
 		m_hoodedStatus = EntityStatus::Crouching;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !mapManager.MapCollision(m_posX - 1 * m_speed * deltaTime, m_posY,
 		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_hoodedStatus != EntityStatus::Crouching)
 	{
-		if (m_hoodedStatus != EntityStatus::Jumping) textureIndex = GetTextureIndex(10, 8);
+		m_textureIndex = 0;
+		if (m_hoodedStatus != EntityStatus::Jumping) m_textureIndex = GetTextureIndex(100, 8, true);
 
-		m_hooded.setTextureRect(sf::IntRect(textureIndex + 32, m_tileHeight * 3, -m_tileWidth, m_tileHeight));
+		m_hooded.setTextureRect(sf::IntRect(m_textureIndex + 32, m_tileHeight * 3, -m_tileWidth, m_tileHeight));
 		m_posX -= 1 * m_speed * deltaTime;
 		m_hoodedDirection = EntityDirection::Left;
 		m_hoodedStatus = EntityStatus::Moving;
@@ -81,9 +83,10 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !mapManager.MapCollision(m_posX + 1 * m_speed * deltaTime, m_posY,
 		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_hoodedStatus != EntityStatus::Crouching)
 	{
-		if (m_hoodedStatus != EntityStatus::Jumping) textureIndex = GetTextureIndex(10, 8);
+		m_textureIndex = 0;
+		if (m_hoodedStatus != EntityStatus::Jumping) m_textureIndex = GetTextureIndex(100, 8, true);
 
-		m_hooded.setTextureRect(sf::IntRect(textureIndex, m_tileHeight * 3, m_tileWidth, m_tileHeight));
+		m_hooded.setTextureRect(sf::IntRect(m_textureIndex, m_tileHeight * 3, m_tileWidth, m_tileHeight));
 		m_posX += 1 * m_speed * deltaTime;
 		m_hoodedDirection = EntityDirection::Right;
 		m_hoodedStatus = EntityStatus::Moving;
@@ -91,6 +94,8 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
 
 	if (m_hoodedStatus == EntityStatus::Idle)
 	{
+		m_clock.restart();
+		m_textureIndex = 0;
 		if (m_hoodedDirection == EntityDirection::Right) m_hooded.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
 		else if (m_hoodedDirection == EntityDirection::Left) m_hooded.setTextureRect(sf::IntRect(32, 0, -m_tileWidth, m_tileHeight));
 	}
@@ -112,7 +117,11 @@ const void Hooded::Update(Camera& camera, float deltaTime, MapManager& mapManage
 	Move(camera, deltaTime, mapManager);
 }
 
-const int Hooded::GetTextureIndex(unsigned short frames, short tiles) const
+const int Hooded::GetTextureIndex(unsigned short frames, unsigned short tiles, bool restartAnimation) const
 {
-	return ((int)m_posX / frames % tiles) * m_tileWidth;
+	std::cout << m_clock.getElapsedTime().asMilliseconds() << std::endl;
+
+	if (!restartAnimation && m_textureIndex == (tiles - 1 ) * m_tileWidth) return m_textureIndex;
+
+	return (m_clock.getElapsedTime().asMilliseconds() / frames % tiles) * m_tileWidth;
 }

@@ -18,6 +18,7 @@ public:
 	const void Update(Camera& camera, float deltaTime, MapManager& mapManager);
 
 private:
+	sf::Clock m_clock;
 	bool m_dematerialized = false;
 	EntityDirection m_hoodedDirection = EntityDirection::Right;
 	const float m_gravity = 1.f;
@@ -26,6 +27,7 @@ private:
 	const float m_initialHoodedPosY = 1080.f;
 	float m_jumpPosY = 0.f;
 	float m_jumpSpeed = 0.02f;
+	unsigned short m_textureIndex = 0;
 	unsigned short m_tileHeight = DEFAULT_SPRITE_SIZE_X_Y;
 	unsigned short m_tileWidth = DEFAULT_SPRITE_SIZE_X_Y;
 
@@ -36,7 +38,7 @@ private:
 	/// <param name="frames">Number of frames that should wait to update the index</param>
 	/// <param name="tiles">Number of tiles in the spritesheet row</param>
 	/// <returns>The texture animation index</returns>
-	const int GetTextureIndex(unsigned short frames, short tiles) const;
+	const int GetTextureIndex(unsigned short frames, unsigned short tiles, bool restartAnimation) const;
 	void InitVariables();
 	void InitHooded();
 	const void Dematerialize();
