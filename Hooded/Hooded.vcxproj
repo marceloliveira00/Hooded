@@ -25,6 +25,7 @@
     <ClInclude Include="Headers\DrawMap.hpp" />
     <ClInclude Include="Headers\Entity.hpp" />
     <ClInclude Include="Headers\Enums\Cell.hpp" />
+    <ClInclude Include="Headers\Enums\EntityDirection.hpp" />
     <ClInclude Include="Headers\GameConfig.hpp" />
     <ClInclude Include="Headers\GameManager.hpp" />
     <ClInclude Include="Headers\Hooded.hpp" />
@@ -42,6 +43,7 @@
     <Image Include="Assets\Props\VillageProps.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Headers\Enums\EntityStatus.hpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\ConvertSketch.cpp" />
     <ClCompile Include="Source\DrawMap.cpp" />
