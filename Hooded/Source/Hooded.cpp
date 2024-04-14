@@ -33,7 +33,7 @@ Hooded::Hooded()
 	InitVariables();
 	InitHooded();
 }
-#include <iostream>
+
 const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
 {
 	m_hoodedStatus = EntityStatus::Idle;
@@ -119,8 +119,6 @@ const void Hooded::Update(Camera& camera, float deltaTime, MapManager& mapManage
 
 const int Hooded::GetTextureIndex(unsigned short frames, unsigned short tiles, bool restartAnimation) const
 {
-	std::cout << m_clock.getElapsedTime().asMilliseconds() << std::endl;
-
 	if (!restartAnimation && m_textureIndex == (tiles - 1 ) * m_tileWidth) return m_textureIndex;
 
 	return (m_clock.getElapsedTime().asMilliseconds() / frames % tiles) * m_tileWidth;
