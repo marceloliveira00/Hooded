@@ -19,5 +19,9 @@ const sf::View Camera::GetCameraView() const
 
 const void Camera::SetPosition(const float posX, const float posY)
 {
-	m_position = sf::Vector2f(posX, posY);
+	if (posX <= m_camOffSetX) m_position = sf::Vector2f(m_camOffSetX, posY - 10.f);
+
+	else if(posY >= m_camOffSetY) m_position = sf::Vector2f(posX, m_camOffSetY);
+
+	else m_position = sf::Vector2f(posX, posY - 10.f);
 }

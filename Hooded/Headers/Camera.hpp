@@ -14,6 +14,9 @@ public:
 
 private:
 	sf::Vector2f m_position;
-	float m_zoomLevel;
+
+	const float m_camOffSetX = 275.f;
+	const float m_camOffSetY = 1315.f;
+	const float m_zoomLevel;
 };
 
