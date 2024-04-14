@@ -24,7 +24,7 @@ private:
 	const float m_gravity = 1.f;
 	EntityStatus m_hoodedStatus = EntityStatus::Idle;
 	const float m_initialHoodedPosX = 250.f;
-	const float m_initialHoodedPosY = 1080.f;
+	const float m_initialHoodedPosY = 150.f;
 	float m_jumpPosY = 0.f;
 	float m_jumpSpeed = 0.02f;
 	unsigned short m_textureIndex = 0;

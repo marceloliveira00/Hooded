@@ -3,7 +3,10 @@
 GameManager::GameManager()
 {
 	m_windowManager = new WindowManager();
+	m_backgroundManager = new BackgroundManager();
 	m_mapManager = new MapManager();
+
+	m_backgroundManager->Load();
 	m_mapManager->Load(Level::ONE);
 	
 	m_hooded = new Hooded();
@@ -13,13 +16,15 @@ GameManager::~GameManager()
 {
 	delete m_hooded;
 	delete m_mapManager;
+	delete m_backgroundManager;
 	delete m_windowManager;
 }
 
 void GameManager::Render()
 {
-	m_windowManager->m_window->clear(sf::Color(27, 27, 83));
+	m_windowManager->m_window->clear(sf::Color(17, 28, 60));
 
+	m_backgroundManager->Render(*m_windowManager->m_window);
 	m_mapManager->Render(*m_windowManager->m_window);
 	m_hooded->Render(m_windowManager->m_window);
 

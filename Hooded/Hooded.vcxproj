@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Assets\Maps\LevelSketch.hpp" />
+    <ClInclude Include="Headers\BackgroundManager.hpp" />
     <ClInclude Include="Headers\Camera.hpp" />
     <ClInclude Include="Headers\ConvertSketch.hpp" />
     <ClInclude Include="Headers\DrawMap.hpp" />
@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Headers\Enums\EntityStatus.hpp" />
+    <ClCompile Include="Source\BackgroundManager.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\ConvertSketch.cpp" />
     <ClCompile Include="Source\DrawMap.cpp" />

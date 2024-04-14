@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../Headers/WindowManager.hpp"
+#include "../Headers/BackgroundManager.hpp"
 #include "../Headers/MapManager.hpp"
 #include "../Headers/Hooded.hpp"
-#include "../Headers/Enums/Level.hpp"
 
 class GameManager
 {
@@ -19,8 +19,9 @@ private:
 	sf::Clock m_clock;
 	float m_deltaTime = 0.f;
 
-	MapManager* m_mapManager;
+	BackgroundManager* m_backgroundManager;
 	Hooded* m_hooded;
+	MapManager* m_mapManager;
 
 	WindowManager* m_windowManager;
 };
