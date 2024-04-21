@@ -29,7 +29,9 @@ const void BackgroundManager::Render(sf::RenderTarget& target) const
 
 const void BackgroundManager::Update(Camera& camera)
 {
-	//m_background.setTextureRect(sf::IntRect(camera.GetCameraView().getCenter().x / 2.f, 0, 576, 324));
+	// moves the 
 	m_background.setPosition(camera.GetCameraView().getCenter().x - m_backgroundHalfWidth, -35.f);
-	//m_parallaxShader.setUniform("offset", camera.GetCameraView().getCenter().x / 10000.f);
+
+	// moves the background while the camera moves
+	m_parallaxShader.setUniform("offset", camera.GetCameraView().getCenter().x / 10000.f);
 }
