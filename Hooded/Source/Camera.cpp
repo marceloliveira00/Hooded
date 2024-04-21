@@ -21,7 +21,7 @@ const void Camera::SetPosition(const float posX, const float posY)
 {
 	if (posX <= m_camOffsetX) m_position = sf::Vector2f(m_camOffsetX, posY - 20.f);
 
-	else if (posY >= m_camOffsetY) m_position = sf::Vector2f(posX, m_camOffsetY - 20);
+	else if (posY >= m_camOffsetY) m_position = sf::Vector2f(posX, m_camOffsetY - 20.f);
 
 	else m_position = sf::Vector2f(posX, posY - 20.f);
 }
