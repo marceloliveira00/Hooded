@@ -15,9 +15,14 @@ private:
 	float m_backgroundHalfWidth = 0.f;
 	float m_offset = 0.f;
 
-	sf::Sprite m_background;
-	sf::Texture m_backgroundTexture;
-
 	sf::Clock m_clock;
+
+	sf::Sprite m_lightedClouds;
+	sf::Texture m_lightedCloudsTexture;
+	sf::Sprite m_clouds;
+	sf::Texture m_cloudsTexture;
+	sf::Sprite m_sky;
+	sf::Texture m_skyTexture;
+
 	sf::Shader m_parallaxShader;
 };

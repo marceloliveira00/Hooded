@@ -2,13 +2,19 @@
 
 void BackgroundManager::Load()
 {
-	m_backgroundTexture.loadFromFile("Assets/Maps/Background/Sky_Night.png");
-	m_backgroundTexture.setRepeated(true);
-	m_backgroundHalfWidth = m_backgroundTexture.getSize().x / 2.f;
+	m_skyTexture.loadFromFile("Assets/Maps/Background/Sky_Night.png");
+	m_lightedCloudsTexture.loadFromFile("Assets/Maps/Background/Clouds_Night_Moonlited.png");
+	m_cloudsTexture.loadFromFile("Assets/Maps/Background/Clouds_Night.png");
 
-	m_background.setTexture(m_backgroundTexture);
-	m_background.setScale(1.f, 1.f);
-	m_background.setPosition(0, 0);
+	m_skyTexture.setRepeated(true);
+	m_lightedCloudsTexture.setRepeated(true);
+	m_cloudsTexture.setRepeated(true);
+
+	m_sky.setTexture(m_skyTexture);
+	m_lightedClouds.setTexture(m_lightedCloudsTexture);
+	m_clouds.setTexture(m_cloudsTexture);
+
+	m_backgroundHalfWidth = m_skyTexture.getSize().x / 2.f;
 
 	m_parallaxShader.loadFromMemory(
 		"uniform float offset;"
@@ -24,14 +30,18 @@ void BackgroundManager::Load()
 
 const void BackgroundManager::Render(sf::RenderTarget& target) const
 {
-	target.draw(m_background, &m_parallaxShader);
+	target.draw(m_sky);
+	target.draw(m_clouds, &m_parallaxShader);
+	target.draw(m_lightedClouds, &m_parallaxShader);
 }
 
 const void BackgroundManager::Update(Camera& camera)
 {
-	// moves the 
-	m_background.setPosition(camera.GetCameraView().getCenter().x - m_backgroundHalfWidth, -35.f);
+	m_sky.setPosition(camera.GetCameraView().getCenter().x - m_backgroundHalfWidth, 0.f);
+	m_lightedClouds.setPosition(camera.GetCameraView().getCenter().x - m_backgroundHalfWidth, 150.f);
+	m_clouds.setPosition(camera.GetCameraView().getCenter().x - m_backgroundHalfWidth, 50.f);
 
 	// moves the background while the camera moves
-	m_parallaxShader.setUniform("offset", camera.GetCameraView().getCenter().x / 10000.f);
+	m_offset += m_clock.restart().asMilliseconds() / 20.f;
+	m_parallaxShader.setUniform("offset", (camera.GetCameraView().getCenter().x + m_offset) / 5000.f);
 }
