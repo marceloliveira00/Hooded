@@ -39,12 +39,12 @@ const void BackgroundManager::Render(sf::RenderTarget& target) const
 
 const void BackgroundManager::Update(Camera& camera)
 {
-	// moves the background while the camera moves
 	m_sky.setPosition(camera.GetCameraView().getCenter().x - m_backgroundHalfWidth, 0.f);
 	m_clouds.setPosition(camera.GetCameraView().getCenter().x - m_backgroundHalfWidth, 50.f);
 	m_lightedClouds.setPosition(camera.GetCameraView().getCenter().x - m_backgroundHalfWidth, 150.f);
 	m_celestialBody.setPosition(camera.GetCameraView().getCenter().x - m_backgroundHalfWidth - 100.f, 80.f);
 
+	// moves the background while the camera moves
 	m_offset += m_clock.restart().asMilliseconds() / 20.f;
 	m_parallaxShader.setUniform("offset", (camera.GetCameraView().getCenter().x + m_offset) / 5000.f);
 }
