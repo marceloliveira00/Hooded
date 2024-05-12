@@ -4,7 +4,6 @@
 
 #include "../Headers/Camera.hpp"
 #include "../Headers/Entity.hpp"
-#include "../Headers/GameConfig.hpp"
 #include "../Headers/MapManager.hpp"
 #include "../Headers/Enums/EntityDirection.hpp"
 #include "../Headers/Enums/EntityStatus.hpp"
@@ -28,8 +27,6 @@ private:
 	float m_jumpPosY = 0.f;
 	float m_jumpSpeed = 0.02f;
 	unsigned short m_textureIndex = 0;
-	unsigned short m_tileHeight = DEFAULT_SPRITE_SIZE_X_Y;
-	unsigned short m_tileWidth = DEFAULT_SPRITE_SIZE_X_Y;
 
 	sf::Sprite m_hooded;
 	sf::RectangleShape m_hoodedBoundingRectangle;

@@ -4,6 +4,7 @@
 #include "../Headers/BackgroundManager.hpp"
 #include "../Headers/MapManager.hpp"
 #include "../Headers/Hooded.hpp"
+#include "../Headers/Skeleton.hpp"
 
 class GameManager
 {
@@ -21,6 +22,7 @@ private:
 
 	BackgroundManager* m_backgroundManager;
 	Hooded* m_hooded;
+	Skeleton* m_skeleton;
 	MapManager* m_mapManager;
 
 	WindowManager* m_windowManager;

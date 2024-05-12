@@ -32,6 +32,7 @@
     <ClInclude Include="Headers\MapManager.hpp" />
     <ClInclude Include="Headers\WindowManager.hpp" />
     <ClInclude Include="Headers\Enums\Level.hpp" />
+    <ClInclude Include="Headers\Skeleton.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Entities\Hooded.png" />
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Headers\Enums\EntityStatus.hpp" />
+    <ClCompile Include="Source\Skeleton.cpp" />
     <ClCompile Include="Source\BackgroundManager.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\ConvertSketch.cpp" />

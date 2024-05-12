@@ -3,14 +3,13 @@
 void Hooded::InitVariables()
 {
 	m_health = 100.f;
+	m_posX = m_initialHoodedPosX;
+	m_posY = m_initialHoodedPosY;
 	m_speed = .1f;
 }
 
 void Hooded::InitHooded()
 {
-	m_posX = m_initialHoodedPosX;
-	m_posY = m_initialHoodedPosY;
-
 	m_hoodedTexture.loadFromFile("Assets/Entities/Hooded.png");
 	m_hooded.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
 	m_hooded.setPosition(m_posX, m_posY);
@@ -23,15 +22,15 @@ void Hooded::InitHooded()
 	m_hoodedBoundingRectangle.setPosition(m_posX, m_posY);
 }
 
-const void Hooded::Dematerialize()
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) m_dematerialized = !m_dematerialized;
-}
-
 Hooded::Hooded()
 {
 	InitVariables();
 	InitHooded();
+}
+
+const void Hooded::Dematerialize()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) m_dematerialized = !m_dematerialized;
 }
 
 const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
