@@ -52,3 +52,4 @@ bld/
 
 # Zip files
 .zip
+enc_temp_folder
