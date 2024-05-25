@@ -30,6 +30,7 @@
     <ClInclude Include="Headers\GameManager.hpp" />
     <ClInclude Include="Headers\Hooded.hpp" />
     <ClInclude Include="Headers\MapManager.hpp" />
+    <ClInclude Include="Headers\Swordsman.hpp" />
     <ClInclude Include="Headers\WindowManager.hpp" />
     <ClInclude Include="Headers\Enums\Level.hpp" />
     <ClInclude Include="Headers\Skeleton.hpp" />
@@ -55,6 +56,7 @@
     <ClCompile Include="Source\Hooded.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MapManager.cpp" />
+    <ClCompile Include="Source\Swordsman.cpp" />
     <ClCompile Include="Source\WindowManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

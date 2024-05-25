@@ -32,13 +32,13 @@ private:
 	sf::RectangleShape m_hoodedBoundingRectangle;
 	sf::Texture m_hoodedTexture;
 
+	void InitVariables();
+	void InitHooded();
+	const void Dematerialize();
 	/// <param name="frames">Number of frames that should wait to update the index</param>
 	/// <param name="tiles">Number of tiles in the spritesheet row</param>
 	/// <returns>The texture animation index</returns>
 	const int GetTextureIndex(unsigned short frames, unsigned short tiles, bool restartAnimation) const;
-	void InitVariables();
-	void InitHooded();
-	const void Dematerialize();
 	const void Move(Camera& camera, float deltaTime, MapManager& mapManager);
 };
 

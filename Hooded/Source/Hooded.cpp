@@ -33,6 +33,13 @@ const void Hooded::Dematerialize()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) m_dematerialized = !m_dematerialized;
 }
 
+const int Hooded::GetTextureIndex(unsigned short frames, unsigned short tiles, bool restartAnimation) const
+{
+	if (!restartAnimation && m_textureIndex == (tiles - 1) * m_tileWidth) return m_textureIndex;
+
+	return (m_clock.getElapsedTime().asMilliseconds() / frames % tiles) * m_tileWidth;
+}
+
 const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
 {
 	m_hoodedStatus = EntityStatus::Idle;
@@ -114,11 +121,4 @@ const void Hooded::Update(Camera& camera, float deltaTime, MapManager& mapManage
 {
 	Dematerialize();
 	Move(camera, deltaTime, mapManager);
-}
-
-const int Hooded::GetTextureIndex(unsigned short frames, unsigned short tiles, bool restartAnimation) const
-{
-	if (!restartAnimation && m_textureIndex == (tiles - 1 ) * m_tileWidth) return m_textureIndex;
-
-	return (m_clock.getElapsedTime().asMilliseconds() / frames % tiles) * m_tileWidth;
 }
