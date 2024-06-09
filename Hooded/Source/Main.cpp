@@ -2,13 +2,11 @@
 
 int main()
 {
-	GameManager game{};
+	GameManager game;
 
 	while (game.Running())
 	{
 		game.Render();
 		game.Update();
 	}
-
-	return 0;
 }

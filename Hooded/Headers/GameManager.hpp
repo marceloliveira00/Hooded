@@ -4,7 +4,7 @@
 #include "../Headers/BackgroundManager.hpp"
 #include "../Headers/MapManager.hpp"
 #include "../Headers/Hooded.hpp"
-#include "../Headers/Swordsman.hpp"
+#include "../Headers/BlueHooded.hpp"
 
 class GameManager
 {
@@ -22,7 +22,7 @@ private:
 
 	BackgroundManager* m_backgroundManager;
 	Hooded* m_hooded;
-	Swordsman* m_swordsman;
+	BlueHooded* m_blueHooded;
 	MapManager* m_mapManager;
 
 	WindowManager* m_windowManager;

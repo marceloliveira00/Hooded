@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\BlueHooded.hpp" />
     <ClInclude Include="Headers\BackgroundManager.hpp" />
     <ClInclude Include="Headers\Camera.hpp" />
     <ClInclude Include="Headers\ConvertSketch.hpp" />
@@ -45,6 +46,7 @@
     <Image Include="Assets\Props\VillageProps.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\BlueHooded.cpp" />
     <ClCompile Include="Headers\Enums\EntityStatus.hpp" />
     <ClCompile Include="Source\Skeleton.cpp" />
     <ClCompile Include="Source\BackgroundManager.cpp" />

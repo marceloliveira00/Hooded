@@ -10,12 +10,12 @@ GameManager::GameManager()
 	m_mapManager->Load(Level::ONE);
 	
 	m_hooded = new Hooded();
-	m_swordsman = new Swordsman();
+	m_blueHooded = new BlueHooded();
 }
 
 GameManager::~GameManager()
 {
-	delete m_swordsman;
+	delete m_blueHooded;
 	delete m_hooded;
 	delete m_mapManager;
 	delete m_backgroundManager;
@@ -28,7 +28,7 @@ void GameManager::Render()
 
 	m_backgroundManager->Render(*m_windowManager->m_window);
 	m_mapManager->Render(*m_windowManager->m_window);
-	m_swordsman->Render(m_windowManager->m_window);
+	m_blueHooded->Render(m_windowManager->m_window);
 	m_hooded->Render(m_windowManager->m_window);
 
 	m_windowManager->m_window->display();
@@ -45,7 +45,7 @@ void GameManager::Update()
 
 	m_windowManager->Update(m_deltaTime);
 	m_backgroundManager->Update(*m_windowManager->m_camera);
-	m_swordsman->Update(m_deltaTime, *m_mapManager);
+	m_blueHooded->Update(m_deltaTime, *m_mapManager);
 	m_hooded->Update(*m_windowManager->m_camera, m_deltaTime, *m_mapManager);
 }
  
