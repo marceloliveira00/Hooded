@@ -33,13 +33,14 @@ private:
 	sf::Texture m_hoodedTexture;
 
 	const void Actions(Camera& camera, float deltaTime, MapManager& mapManager);
-	const void Attack() const;
+	const void Attack();
 	void InitVariables();
 	void InitHooded();
 	const void Dematerialize();
-	/// <param name="frames">Number of frames that should wait to update the index</param>
-	/// <param name="tiles">Number of tiles in the spritesheet row</param>
-	/// <returns>The texture animation index</returns>
+	/// @param frames Number of frames that should wait to update the texture index
+	/// @param tiles Number of tiles in the spritesheet row
+	/// @param restartAnimation True if the animation should restart. False if the animation should stop on the last tile in the spritesheet row
+	/// @return The texture animation index
 	const int GetTextureIndex(unsigned short frames, unsigned short tiles, bool restartAnimation) const;
 	const void ResetJump(float deltaTime, MapManager& mapManager);
 	const void Move(float deltaTime, MapManager& mapManager);

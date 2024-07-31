@@ -22,11 +22,15 @@ const void Hooded::Actions(Camera& camera, float deltaTime, MapManager& mapManag
 	camera.SetPosition(m_posX, m_posY);
 }
 
-const void Hooded::Attack() const
+const void Hooded::Attack()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 	{
+		if (m_hoodedStatus != EntityStatus::Jumping) m_textureIndex = GetTextureIndex(100, 8, false);
 
+		if (m_hoodedDirection == EntityDirection::Right) m_hooded.setTextureRect(sf::IntRect(m_textureIndex, m_tileHeight * 8, m_tileWidth, m_tileHeight));
+		else if (m_hoodedDirection == EntityDirection::Left) m_hooded.setTextureRect(sf::IntRect(m_textureIndex + 32, m_tileHeight * 8, -m_tileWidth, m_tileHeight));
+		m_hoodedStatus = EntityStatus::Crouching;
 	}
 }
 
