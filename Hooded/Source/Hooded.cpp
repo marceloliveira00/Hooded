@@ -1,5 +1,35 @@
 #include "../Headers/Hooded.hpp"
 
+
+const void Hooded::Actions(Camera& camera, float deltaTime, MapManager& mapManager)
+{
+	m_hoodedStatus = EntityStatus::Idle;
+
+	Attack();
+	ResetJump(deltaTime, mapManager);
+	Move(deltaTime, mapManager);
+
+	if (m_hoodedStatus == EntityStatus::Idle)
+	{
+		m_clock.restart();
+		m_textureIndex = 0;
+		if (m_hoodedDirection == EntityDirection::Right) m_hooded.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
+		else if (m_hoodedDirection == EntityDirection::Left) m_hooded.setTextureRect(sf::IntRect(32, 0, -m_tileWidth, m_tileHeight));
+	}
+
+	m_hoodedBoundingRectangle.setPosition(m_posX, m_posY);
+	m_hooded.setPosition(m_posX, m_posY);
+	camera.SetPosition(m_posX, m_posY);
+}
+
+const void Hooded::Attack() const
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	{
+
+	}
+}
+
 void Hooded::InitVariables()
 {
 	m_health = 100.f;
@@ -40,21 +70,8 @@ const int Hooded::GetTextureIndex(unsigned short frames, unsigned short tiles, b
 	return (m_clock.getElapsedTime().asMilliseconds() / frames % tiles) * m_tileWidth;
 }
 
-const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
+const void Hooded::Move(float deltaTime, MapManager& mapManager)
 {
-	m_hoodedStatus = EntityStatus::Idle;
-
-	// Gravity
-	if (mapManager.SpriteOnGround(m_posX, m_posY + m_gravity * m_speed * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight)))
-	{
-		m_jumpPosY = 0.f;
-	}
-	else
-	{
-		m_posY += m_gravity * m_speed * deltaTime;
-		m_hoodedStatus = EntityStatus::Jumping;
-	}
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !mapManager.MapCollision(m_posX, m_posY - 1 * m_speed * deltaTime,
 		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_hoodedStatus != EntityStatus::Jumping || m_jumpPosY != 0.f && m_jumpPosY < 2.f)
 	{
@@ -97,18 +114,6 @@ const void Hooded::Move(Camera& camera, float deltaTime, MapManager& mapManager)
 		m_hoodedDirection = EntityDirection::Right;
 		m_hoodedStatus = EntityStatus::Moving;
 	}
-
-	if (m_hoodedStatus == EntityStatus::Idle)
-	{
-		m_clock.restart();
-		m_textureIndex = 0;
-		if (m_hoodedDirection == EntityDirection::Right) m_hooded.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
-		else if (m_hoodedDirection == EntityDirection::Left) m_hooded.setTextureRect(sf::IntRect(32, 0, -m_tileWidth, m_tileHeight));
-	}
-
-	m_hoodedBoundingRectangle.setPosition(m_posX, m_posY);
-	m_hooded.setPosition(m_posX, m_posY);
-	camera.SetPosition(m_posX, m_posY);
 }
 
 const void Hooded::Render(sf::RenderTarget* target) const
@@ -117,8 +122,21 @@ const void Hooded::Render(sf::RenderTarget* target) const
 	target->draw(m_hoodedBoundingRectangle);
 }
 
+const void Hooded::ResetJump(float deltaTime, MapManager& mapManager)
+{
+	if (mapManager.SpriteOnGround(m_posX, m_posY + m_gravity * m_speed * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight)))
+	{
+		m_jumpPosY = 0.f;
+	}
+	else
+	{
+		m_posY += m_gravity * m_speed * deltaTime;
+		m_hoodedStatus = EntityStatus::Jumping;
+	}
+}
+
 const void Hooded::Update(Camera& camera, float deltaTime, MapManager& mapManager)
 {
 	Dematerialize();
-	Move(camera, deltaTime, mapManager);
+	Actions(camera, deltaTime, mapManager);
 }

@@ -11,7 +11,7 @@ void BlueHooded::InitVariables()
 void BlueHooded::InitBlueHooded()
 {
 	m_blueHoodedTexture.loadFromFile("Assets/Entities/Hooded_Blue.png");
-	m_blueHooded.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
+	m_blueHooded.setTextureRect(sf::IntRect(32, 0, -m_tileWidth, m_tileHeight));
 	m_blueHooded.setPosition(m_posX, m_posY);
 	m_blueHooded.setTexture(m_blueHoodedTexture);
 

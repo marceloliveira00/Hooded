@@ -32,6 +32,8 @@ private:
 	sf::RectangleShape m_hoodedBoundingRectangle;
 	sf::Texture m_hoodedTexture;
 
+	const void Actions(Camera& camera, float deltaTime, MapManager& mapManager);
+	const void Attack() const;
 	void InitVariables();
 	void InitHooded();
 	const void Dematerialize();
@@ -39,6 +41,7 @@ private:
 	/// <param name="tiles">Number of tiles in the spritesheet row</param>
 	/// <returns>The texture animation index</returns>
 	const int GetTextureIndex(unsigned short frames, unsigned short tiles, bool restartAnimation) const;
-	const void Move(Camera& camera, float deltaTime, MapManager& mapManager);
+	const void ResetJump(float deltaTime, MapManager& mapManager);
+	const void Move(float deltaTime, MapManager& mapManager);
 };
 
