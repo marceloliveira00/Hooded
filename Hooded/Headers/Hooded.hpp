@@ -18,7 +18,6 @@ public:
 
 private:
 	sf::Clock m_clock;
-	bool m_dematerialized = false;
 	EntityDirection m_hoodedDirection = EntityDirection::Right;
 	const float m_gravity = 1.f;
 	EntityStatus m_hoodedStatus = EntityStatus::Idle;
@@ -37,6 +36,7 @@ private:
 	void InitVariables();
 	void InitHooded();
 	const void Dematerialize();
+	const int GetMaxTextureIndexByMaxTileNumber(short maxTile) const;
 	/// @param frames Number of frames that should wait to update the texture index
 	/// @param tiles Number of tiles in the spritesheet row
 	/// @param restartAnimation True if the animation should restart. False if the animation should stop on the last tile in the spritesheet row

@@ -3,7 +3,7 @@
 
 const void Hooded::Actions(Camera& camera, float deltaTime, MapManager& mapManager)
 {
-	m_hoodedStatus = EntityStatus::Idle;
+	m_hoodedStatus = m_hoodedStatus == EntityStatus::Attacking ? EntityStatus::Attacking : EntityStatus::Idle;
 
 	Attack();
 	ResetJump(deltaTime, mapManager);
@@ -24,13 +24,23 @@ const void Hooded::Actions(Camera& camera, float deltaTime, MapManager& mapManag
 
 const void Hooded::Attack()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) || m_hoodedStatus == EntityStatus::Attacking)
 	{
-		if (m_hoodedStatus != EntityStatus::Jumping) m_textureIndex = GetTextureIndex(100, 8, false);
+		m_hoodedStatus = EntityStatus::Attacking;
+		const unsigned short tiles = 8;
 
-		if (m_hoodedDirection == EntityDirection::Right) m_hooded.setTextureRect(sf::IntRect(m_textureIndex, m_tileHeight * 8, m_tileWidth, m_tileHeight));
-		else if (m_hoodedDirection == EntityDirection::Left) m_hooded.setTextureRect(sf::IntRect(m_textureIndex + 32, m_tileHeight * 8, -m_tileWidth, m_tileHeight));
-		m_hoodedStatus = EntityStatus::Crouching;
+		if (m_textureIndex == GetMaxTextureIndexByMaxTileNumber(tiles))
+		{
+			m_hoodedStatus = EntityStatus::Idle;
+			return;
+		}
+
+		m_textureIndex = GetTextureIndex(100, tiles, false);
+
+		if (m_hoodedDirection == EntityDirection::Right)
+			m_hooded.setTextureRect(sf::IntRect(m_textureIndex, m_tileHeight * 8, m_tileWidth, m_tileHeight));
+		else if (m_hoodedDirection == EntityDirection::Left)
+			m_hooded.setTextureRect(sf::IntRect(m_textureIndex + 32, m_tileHeight * 8, -m_tileWidth, m_tileHeight));
 	}
 }
 
@@ -64,8 +74,20 @@ Hooded::Hooded()
 
 const void Hooded::Dematerialize()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) m_dematerialized = !m_dematerialized;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		if (m_hoodedStatus != EntityStatus::Jumping) m_textureIndex = GetTextureIndex(100, 4, false);
+
+		if (m_hoodedDirection == EntityDirection::Right)
+			m_hooded.setTextureRect(sf::IntRect(m_textureIndex, m_tileHeight * 6, m_tileWidth, m_tileHeight));
+		else if (m_hoodedDirection == EntityDirection::Left)
+			m_hooded.setTextureRect(sf::IntRect(m_textureIndex + 32, m_tileHeight * 6, -m_tileWidth, m_tileHeight));
+
+		m_hoodedStatus = EntityStatus::Dematerialized;
+	}
 }
+
+const int Hooded::GetMaxTextureIndexByMaxTileNumber(short maxTile) const { return (maxTile - 1) * m_tileWidth; }
 
 const int Hooded::GetTextureIndex(unsigned short frames, unsigned short tiles, bool restartAnimation) const
 {
@@ -76,8 +98,12 @@ const int Hooded::GetTextureIndex(unsigned short frames, unsigned short tiles, b
 
 const void Hooded::Move(float deltaTime, MapManager& mapManager)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !mapManager.MapCollision(m_posX, m_posY - 1 * m_speed * deltaTime,
-		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_hoodedStatus != EntityStatus::Jumping || m_jumpPosY != 0.f && m_jumpPosY < 2.f)
+	if (m_hoodedStatus == EntityStatus::Attacking) return;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
+		&& !mapManager.MapCollision(m_posX, m_posY - 1 * m_speed * deltaTime,
+			sf::Vector2i(m_tileWidth, m_tileHeight), m_hoodedStatus == EntityStatus::Dematerialized)
+		&& m_hoodedStatus != EntityStatus::Jumping || m_jumpPosY != 0.f && m_jumpPosY < 2.f)
 	{
 		m_textureIndex = 0;
 
@@ -92,12 +118,15 @@ const void Hooded::Move(float deltaTime, MapManager& mapManager)
 	{
 		if (m_hoodedStatus != EntityStatus::Jumping) m_textureIndex = GetTextureIndex(100, 4, false);
 
-		if (m_hoodedDirection == EntityDirection::Right) m_hooded.setTextureRect(sf::IntRect(m_textureIndex, m_tileHeight * 4, m_tileWidth, m_tileHeight));
-		else if (m_hoodedDirection == EntityDirection::Left) m_hooded.setTextureRect(sf::IntRect(m_textureIndex + 32, m_tileHeight * 4, -m_tileWidth, m_tileHeight));
+		if (m_hoodedDirection == EntityDirection::Right)
+			m_hooded.setTextureRect(sf::IntRect(m_textureIndex, m_tileHeight * 4, m_tileWidth, m_tileHeight));
+		else if (m_hoodedDirection == EntityDirection::Left)
+			m_hooded.setTextureRect(sf::IntRect(m_textureIndex + 32, m_tileHeight * 4, -m_tileWidth, m_tileHeight));
+
 		m_hoodedStatus = EntityStatus::Crouching;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !mapManager.MapCollision(m_posX - 1 * m_speed * deltaTime, m_posY,
-		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_hoodedStatus != EntityStatus::Crouching)
+		sf::Vector2i(m_tileWidth, m_tileHeight), m_hoodedStatus == EntityStatus::Dematerialized) && m_hoodedStatus != EntityStatus::Crouching)
 	{
 		m_textureIndex = 0;
 		if (m_hoodedStatus != EntityStatus::Jumping) m_textureIndex = GetTextureIndex(100, 8, true);
@@ -108,7 +137,7 @@ const void Hooded::Move(float deltaTime, MapManager& mapManager)
 		m_hoodedStatus = EntityStatus::Moving;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !mapManager.MapCollision(m_posX + 1 * m_speed * deltaTime, m_posY,
-		sf::Vector2i(m_tileWidth, m_tileHeight), m_dematerialized) && m_hoodedStatus != EntityStatus::Crouching)
+		sf::Vector2i(m_tileWidth, m_tileHeight), m_hoodedStatus == EntityStatus::Dematerialized) && m_hoodedStatus != EntityStatus::Crouching)
 	{
 		m_textureIndex = 0;
 		if (m_hoodedStatus != EntityStatus::Jumping) m_textureIndex = GetTextureIndex(100, 8, true);

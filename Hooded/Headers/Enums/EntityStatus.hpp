@@ -2,6 +2,8 @@
 
 enum EntityStatus : unsigned short
 {
+	Attacking,
+	Dematerialized,
 	Idle,
 	Moving,
 	Jumping,
