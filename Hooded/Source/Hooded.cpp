@@ -3,7 +3,10 @@
 
 const void Hooded::Actions(Camera& camera, float deltaTime, MapManager& mapManager)
 {
-	m_hoodedStatus = m_hoodedStatus == EntityStatus::Attacking ? EntityStatus::Attacking : EntityStatus::Idle;
+	if (m_hoodedStatus != EntityStatus::Attacking && m_hoodedStatus != EntityStatus::Crouching && m_hoodedStatus != EntityStatus::Jumping)
+	{
+		m_hoodedStatus = EntityStatus::Idle;
+	}
 
 	Attack();
 	ResetJump(deltaTime, mapManager);
@@ -26,6 +29,8 @@ const void Hooded::Attack()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) || m_hoodedStatus == EntityStatus::Attacking)
 	{
+		if (m_hoodedStatus != EntityStatus::Attacking) m_clock.restart();
+
 		m_hoodedStatus = EntityStatus::Attacking;
 		const unsigned short tiles = 8;
 
@@ -105,6 +110,8 @@ const void Hooded::Move(float deltaTime, MapManager& mapManager)
 			sf::Vector2i(m_tileWidth, m_tileHeight), m_hoodedStatus == EntityStatus::Dematerialized)
 		&& m_hoodedStatus != EntityStatus::Jumping || m_jumpPosY != 0.f && m_jumpPosY < 2.f)
 	{
+		if (m_hoodedStatus != EntityStatus::Jumping) m_clock.restart();
+
 		m_textureIndex = 0;
 
 		if (m_jumpPosY == 0) m_jumpPosY += m_gravity;
@@ -114,8 +121,16 @@ const void Hooded::Move(float deltaTime, MapManager& mapManager)
 		m_posY -= m_jumpPosY;
 		m_hoodedStatus = EntityStatus::Jumping;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || m_hoodedStatus == EntityStatus::Crouching)
 	{
+		if (m_hoodedStatus != EntityStatus::Crouching) m_clock.restart();
+
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			m_hoodedStatus = EntityStatus::Idle;
+			return;
+		}
+
 		if (m_hoodedStatus != EntityStatus::Jumping) m_textureIndex = GetTextureIndex(100, 4, false);
 
 		if (m_hoodedDirection == EntityDirection::Right)
