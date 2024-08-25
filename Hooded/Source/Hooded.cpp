@@ -3,7 +3,7 @@
 
 const void Hooded::Actions(Camera& camera, float deltaTime, MapManager& mapManager)
 {
-	if (m_hoodedStatus != EntityStatus::Attacking && m_hoodedStatus != EntityStatus::Crouching && m_hoodedStatus != EntityStatus::Jumping)
+	if (m_hoodedStatus != EntityStatus::Attacking && m_hoodedStatus != EntityStatus::Crouching && m_spriteOnGround)
 	{
 		m_hoodedStatus = EntityStatus::Idle;
 	}
@@ -135,14 +135,14 @@ const void Hooded::Move(float deltaTime, MapManager& mapManager)
 	{
 		m_posX -= 1 * m_speed * deltaTime;
 		m_hoodedDirection = EntityDirection::Left;
-		m_hoodedStatus = EntityStatus::Moving;
+		m_hoodedStatus = m_spriteOnGround ? EntityStatus::Moving : EntityStatus::Jumping;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !mapManager.MapCollision(m_posX + 1 * m_speed * deltaTime, m_posY,
 		sf::Vector2i(m_tileWidth, m_tileHeight), m_hoodedStatus == EntityStatus::Dematerialized) && m_hoodedStatus != EntityStatus::Crouching)
 	{
 		m_posX += 1 * m_speed * deltaTime;
 		m_hoodedDirection = EntityDirection::Right;
-		m_hoodedStatus = EntityStatus::Moving;
+		m_hoodedStatus = m_spriteOnGround ? EntityStatus::Moving : EntityStatus::Jumping;
 	}
 }
 
@@ -154,7 +154,8 @@ const void Hooded::Render(sf::RenderTarget* target) const
 
 const void Hooded::ResetJump(float deltaTime, MapManager& mapManager)
 {
-	if (mapManager.SpriteOnGround(m_posX, m_posY + m_gravity * m_speed * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight)))
+	m_spriteOnGround = mapManager.SpriteOnGround(m_posX, m_posY + m_gravity * m_speed * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight));
+	if (m_spriteOnGround)
 	{
 		m_jumpPosY = 0.f;
 	}
@@ -162,6 +163,7 @@ const void Hooded::ResetJump(float deltaTime, MapManager& mapManager)
 	{
 		m_posY += m_gravity * m_speed * deltaTime;
 		m_hoodedStatus = EntityStatus::Jumping;
+		m_spriteOnGround = false;
 	}
 }
 
