@@ -16,7 +16,7 @@ public:
 		unsigned short tileWidth);
 	~Animation();
 
-	const void Update(const EntityDirection currentEntityDirection, EntityStatus* currentEntityStatus);
+	const void SetTexture(const EntityDirection entityDirection, EntityStatus* entityStatus);
 
 private:
 	unsigned short m_textureIndex = 0;
@@ -38,4 +38,5 @@ private:
 	/// @param restartAnimation True if the animation should restart. False if the animation should stop on the last tile in the spritesheet row
 	/// @return The texture animation index
 	const int GetTextureIndex(unsigned short frames, unsigned short tiles, bool restartAnimation) const;
+	const bool WaitForAnimationToEnd(const EntityStatus entityStatus) const;
 };

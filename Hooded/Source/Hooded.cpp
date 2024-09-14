@@ -39,14 +39,8 @@ static void DefineHoodedSpriteCoordinates(std::map<EntityStatus, SpriteCoordinat
 
 const void Hooded::Attack()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) || m_hoodedStatus == EntityStatus::Attacking)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 	{
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-		{
-			m_hoodedStatus = EntityStatus::Idle;
-			return;
-		}
-
 		m_hoodedStatus = EntityStatus::Attacking;
 	}
 }
@@ -120,8 +114,6 @@ const void Hooded::Move(float deltaTime, MapManager& mapManager)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || m_hoodedStatus == EntityStatus::Crouching)
 	{
-		if (m_hoodedStatus != EntityStatus::Crouching) m_clock.restart();
-
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
 			m_hoodedStatus = EntityStatus::Idle;
@@ -172,5 +164,5 @@ const void Hooded::Update(Camera& camera, float deltaTime, MapManager& mapManage
 	Dematerialize();
 	Actions(camera, deltaTime, mapManager);
 
-	m_animation->Update(m_hoodedDirection, &m_hoodedStatus);
+	m_animation->SetTexture(m_hoodedDirection, &m_hoodedStatus);
 }

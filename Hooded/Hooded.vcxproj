@@ -48,6 +48,7 @@
     <Image Include="Assets\Props\VillageProps.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Headers\PlayerActions.hpp" />
     <ClCompile Include="Source\SpriteCoordinates.cpp" />
     <ClCompile Include="Source\Animation.cpp" />
     <ClCompile Include="Source\BlueHooded.cpp" />
