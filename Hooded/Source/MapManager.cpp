@@ -16,32 +16,32 @@ bool MapManager::MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextS
 {
 	if (dematerialized) return false;
 
-	const int bottom = (int)nextPosY + nextSize.y;
-	const int left = (int)nextPosX;
-	const int right = (int)nextPosX + nextSize.x;
-	const int top = (int)nextPosY;
+	// compute the bouding box in tile coordinates
+	const int left = static_cast<int>(nextPosX) / DEFAULT_SPRITE_SIZE_X_Y;
+	const int right = static_cast<int>(nextPosX + nextSize.x) / DEFAULT_SPRITE_SIZE_X_Y;
+	const int top = static_cast<int>(nextPosY) / DEFAULT_SPRITE_SIZE_X_Y;
+	const int bottom = static_cast<int>(nextPosY + nextSize.y) / DEFAULT_SPRITE_SIZE_X_Y;
 
-	sf::Vector2i topLeft(sf::Vector2i(left / DEFAULT_SPRITE_SIZE_X_Y, top / DEFAULT_SPRITE_SIZE_X_Y));
-	sf::Vector2i topRight(sf::Vector2i(right / DEFAULT_SPRITE_SIZE_X_Y, top / DEFAULT_SPRITE_SIZE_X_Y));
-	sf::Vector2i bottomLeft(sf::Vector2i(left / DEFAULT_SPRITE_SIZE_X_Y, bottom / DEFAULT_SPRITE_SIZE_X_Y));
-	sf::Vector2i bottomRight(sf::Vector2i(right / DEFAULT_SPRITE_SIZE_X_Y, bottom / DEFAULT_SPRITE_SIZE_X_Y));
-
-	m_tiles.clear();
-
-	m_tiles.push_back(topLeft);
-	if (std::find(m_tiles.begin(), m_tiles.end(), topRight) == m_tiles.end()) m_tiles.push_back(topRight);
-	if (std::find(m_tiles.begin(), m_tiles.end(), bottomLeft) == m_tiles.end()) m_tiles.push_back(bottomLeft);
-	if (std::find(m_tiles.begin(), m_tiles.end(), bottomRight) == m_tiles.end()) m_tiles.push_back(bottomRight);
-
-	for (unsigned short i = 0; i < m_tiles.size(); i++)
+	std::unordered_set<sf::Vector2i, Vector2iHash> m_tiles =
 	{
-		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::Empty) continue;
+		{left, top}, {right, top}, {left, bottom}, {right, bottom},
+	};
 
-		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::Grass) return true;
+	// static bitset to quickly check which Cell types are collidable
+	// the bitset items set to true, indicating that these cell types are considered collidable
+	static const std::bitset<32> collidableBitset = []
+	{
+		std::bitset<32> b;
+		b.set(static_cast<size_t>(Cell::Grass));
+		b.set(static_cast<size_t>(Cell::Hill));
+		b.set(static_cast<size_t>(Cell::MapBoundary));
+		return b;
+	}();
 
-		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::Hill) return true;
-
-		if ((*m_map)[m_tiles[i].x][m_tiles[i].y] == Cell::MapBoundary) return true;
+	// check if any of the tiles are collidable
+	for (const auto& tile : m_tiles)
+	{
+		if (collidableBitset.test(static_cast<size_t>((*m_map)[tile.x][tile.y]))) return true;
 	}
 
 	return false;
@@ -54,26 +54,26 @@ const void MapManager::Render(sf::RenderTarget& target)
 
 bool MapManager::SpriteOnGround(float posX, float posY, sf::Vector2i size)
 {
-	const int bottom = (int)posY + size.y;
-	const int left = (int)posX;
-	const int right = (int)posX + size.x;
+	// calculate bottom coordinate (avoiding rounding issues)
+	const int bottom = static_cast<int>(std::floor(posY + size.y));
+	const int left = static_cast<int>(posX);
+	const int right = static_cast<int>(posX + size.x);
 
-	sf::Vector2i bottomLeft(sf::Vector2i(left / DEFAULT_SPRITE_SIZE_X_Y, bottom / DEFAULT_SPRITE_SIZE_X_Y));
-	sf::Vector2i bottomRight(sf::Vector2i(right / DEFAULT_SPRITE_SIZE_X_Y, bottom / DEFAULT_SPRITE_SIZE_X_Y));
+	// convert to tile indices
+	sf::Vector2i bottomLeft(left / DEFAULT_SPRITE_SIZE_X_Y, bottom / DEFAULT_SPRITE_SIZE_X_Y);
+	sf::Vector2i bottomRight(right / DEFAULT_SPRITE_SIZE_X_Y, bottom / DEFAULT_SPRITE_SIZE_X_Y);
 
-	m_tiles.clear();
+	// use unordered_set to prevent duplicates
+	std::unordered_set<sf::Vector2i, Vector2iHash> groundTiles = { bottomLeft, bottomRight };
 
-	if (std::find(m_tiles.begin(), m_tiles.end(), bottomLeft) == m_tiles.end()) m_tiles.push_back(bottomLeft);
-	if (std::find(m_tiles.begin(), m_tiles.end(), bottomRight) == m_tiles.end()) m_tiles.push_back(bottomRight);
+	// define ground tiles set
+	static const std::unordered_set<Cell> groundCells = { Cell::Grass, Cell::Hill };
 
-	for (unsigned short i = 0; i < m_tiles.size(); i++)
+	// check if the player is touching the ground
+	for (const auto& tile : groundTiles)
 	{
-		// Checks if the player is touching the ground
-		if ((*m_map)[bottomLeft.x][bottomLeft.y] == Cell::Grass || (*m_map)[bottomRight.x][bottomRight.y] == Cell::Grass ||
-			(*m_map)[bottomLeft.x][bottomLeft.y] == Cell::Hill || (*m_map)[bottomRight.x][bottomRight.y] == Cell::Hill)
-		{
-			return true;
-		}
+		Cell cell = (*m_map)[tile.x][tile.y];
+		if (groundCells.find(cell) != groundCells.end()) return true;
 	}
 
 	return false;
