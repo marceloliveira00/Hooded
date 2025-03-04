@@ -21,7 +21,7 @@ void Swordsman::InitSwordsman()
 	m_swordsmanBoundingRectangle.setOutlineColor(sf::Color::Red);
 	m_swordsmanBoundingRectangle.setOutlineThickness(1);
 	m_swordsmanBoundingRectangle.setPosition(m_posX, m_posY);
-	m_swordsmanBoundingRectangle.setScale(1.2, 1.2);
+	m_swordsmanBoundingRectangle.setScale(1.2f, 1.2f);
 }
 
 Swordsman::Swordsman()
