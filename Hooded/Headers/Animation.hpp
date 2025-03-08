@@ -11,9 +11,9 @@ class Animation
 public:
 	Animation(
 		sf::Sprite* sprite,
-		std::map<EntityStatus, SpriteCoordinates> spriteCoordinates,
-		unsigned short tileHeight,
-		unsigned short tileWidth);
+		const std::map<EntityStatus, SpriteCoordinates> spriteCoordinates,
+		const unsigned short tileHeight,
+		const unsigned short tileWidth);
 	~Animation();
 
 	const void SetTexture(const EntityDirection entityDirection, EntityStatus* entityStatus);

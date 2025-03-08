@@ -64,9 +64,7 @@ static bool DrawMapProps(const Map* map, unsigned short x, unsigned short y, uns
 
 void DrawMap(const Map* map, sf::Image& mapSketch, sf::Texture& mapTexture, sf::Texture& mapPropsTexture, sf::RenderTarget& target)
 {
-	// only draw the part of the map that is visible on the screen.
-	//unsigned short mapEnd = SCREEN_WIDTH / DEFAULT_SPRITE_SIZE_X_Y;
-	//unsigned short mapStart = DEFAULT_SPRITE_SIZE_X_Y;
+	// TODO: only draw the part of the map that is visible on the screen.
 
 	sf::Sprite cellSprite;
 

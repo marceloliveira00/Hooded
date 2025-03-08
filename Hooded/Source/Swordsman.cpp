@@ -3,25 +3,25 @@
 void Swordsman::InitVariables()
 {
 	m_health = 100.f;
-	m_posX = m_initialSwordsmanPosX;
-	m_posY = m_initialSwordsmanPosY;
+	m_posX = 300.f;
+	m_posY = 313.5f;
 	m_speed = .08f;
 }
 
 void Swordsman::InitSwordsman()
 {
-	m_swordsmanTexture.loadFromFile("Assets/Entities/Swordsman.png");
-	m_swordsman.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
-	m_swordsman.setPosition(m_posX, m_posY);
-	m_swordsman.setScale(1.2f, 1.2f);
-	m_swordsman.setTexture(m_swordsmanTexture);
+	m_spriteTexture.loadFromFile("Assets/Entities/Swordsman.png");
+	m_sprite.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
+	m_sprite.setPosition(m_posX, m_posY);
+	m_sprite.setScale(1.2f, 1.2f);
+	m_sprite.setTexture(m_spriteTexture);
 
-	m_swordsmanBoundingRectangle.setSize(sf::Vector2f(m_tileWidth, m_tileHeight));
-	m_swordsmanBoundingRectangle.setFillColor(sf::Color::Transparent);
-	m_swordsmanBoundingRectangle.setOutlineColor(sf::Color::Red);
-	m_swordsmanBoundingRectangle.setOutlineThickness(1);
-	m_swordsmanBoundingRectangle.setPosition(m_posX, m_posY);
-	m_swordsmanBoundingRectangle.setScale(1.2f, 1.2f);
+	m_spriteBoundingRectangle.setSize(sf::Vector2f(m_tileWidth, m_tileHeight));
+	m_spriteBoundingRectangle.setFillColor(sf::Color::Transparent);
+	m_spriteBoundingRectangle.setOutlineColor(sf::Color::Red);
+	m_spriteBoundingRectangle.setOutlineThickness(.5f);
+	m_spriteBoundingRectangle.setPosition(m_posX, m_posY);
+	m_spriteBoundingRectangle.setScale(1.2f, 1.2f);
 }
 
 Swordsman::Swordsman()
@@ -32,8 +32,8 @@ Swordsman::Swordsman()
 
 const void Swordsman::Render(sf::RenderTarget* target) const
 {
-	target->draw(m_swordsman);
-	target->draw(m_swordsmanBoundingRectangle);
+	target->draw(m_sprite);
+	target->draw(m_spriteBoundingRectangle);
 }
 
 const void Swordsman::Move()

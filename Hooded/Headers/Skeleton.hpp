@@ -14,13 +14,6 @@ public:
 	const void Update(float deltaTime, MapManager& mapManager);
 
 private:
-	const float m_initialSkeletonPosX = 300.f;
-	const float m_initialSkeletonPosY = 319.799927f;
-
-	sf::Sprite m_skeleton;
-	sf::RectangleShape m_skeletonBoundingRectangle;
-	sf::Texture m_skeletonTexture;
-
 	void InitVariables();
 	void InitSkeleton();
 	const void Move();

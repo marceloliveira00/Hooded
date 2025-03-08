@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "../Headers/WindowManager.hpp"
 #include "../Headers/BackgroundManager.hpp"
 #include "../Headers/MapManager.hpp"

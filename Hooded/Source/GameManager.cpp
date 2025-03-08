@@ -41,11 +41,12 @@ const bool GameManager::Running() const
 
 void GameManager::Update()
 {
-	m_deltaTime = (float)m_clock.restart().asMilliseconds(); // Updates delta time
+	m_deltaTime = (float)m_clock.restart().asMilliseconds();
+	std::vector<Entity*> entities = { m_blueHooded };
 
 	m_windowManager->Update(m_deltaTime);
 	m_backgroundManager->Update(*m_windowManager->m_camera);
 	m_blueHooded->Update(m_deltaTime, *m_mapManager);
-	m_hooded->Update(*m_windowManager->m_camera, m_deltaTime, *m_mapManager);
+	m_hooded->Update(*m_windowManager->m_camera, m_deltaTime, *m_mapManager, entities);
 }
  

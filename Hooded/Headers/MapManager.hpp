@@ -7,6 +7,7 @@
 
 #include "../Headers/ConvertSketch.hpp"
 #include "../Headers/DrawMap.hpp"
+#include "../Headers/Enums/EntityStatus.hpp"
 #include "../Headers/Enums/Level.hpp"
 #include "../Headers/GameConfig.hpp"
 
@@ -19,7 +20,7 @@ public:
 	~MapManager();
 
 	void Load(Level level);
-	bool MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextSize, bool dematerialized = false);
+	bool MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextSize, EntityStatus status);
 	const void Render(sf::RenderTarget& target);
 	bool SpriteOnGround(float posX, float posY, sf::Vector2i size);
 

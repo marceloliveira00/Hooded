@@ -12,9 +12,9 @@ void MapManager::Load(Level level)
 	m_mapPropsTexture.loadFromFile("Assets/Props/VillageProps.png");
 }
 
-bool MapManager::MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextSize, bool dematerialized)
+bool MapManager::MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextSize, EntityStatus status)
 {
-	if (dematerialized) return false;
+	if (status == EntityStatus::Dematerialized) return false;
 
 	// compute the bouding box in tile coordinates
 	const int left = static_cast<int>(nextPosX) / DEFAULT_SPRITE_SIZE_X_Y;

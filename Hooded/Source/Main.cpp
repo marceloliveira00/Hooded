@@ -9,4 +9,6 @@ int main()
 		game.Render();
 		game.Update();
 	}
+
+	return 0;
 }

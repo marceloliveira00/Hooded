@@ -2,9 +2,9 @@
 
 Animation::Animation(
 	sf::Sprite* sprite,
-	std::map<EntityStatus, SpriteCoordinates> spriteCoordinates,
-	unsigned short tileHeight,
-	unsigned short tileWidth)
+	const std::map<EntityStatus, SpriteCoordinates> spriteCoordinates,
+	const unsigned short tileHeight,
+	const unsigned short tileWidth)
 {
 	m_sprite = sprite;
 	m_spriteCoordinates = spriteCoordinates;
