@@ -5,14 +5,13 @@
 #include "Enums/EntityDirection.hpp"
 #include "Enums/EntityStatus.hpp"
 #include "GameConfig.hpp"
-#include "SpriteCoordinates.hpp"
 
 class Animation
 {
 public:
 	Animation(
 		sf::Sprite* sprite,
-		const std::map<EntityStatus, SpriteCoordinates> spriteCoordinates,
+		const std::map<EntityStatus, std::pair<unsigned short, unsigned short>> spriteCoordinates,
 		const unsigned short tileHeight,
 		const unsigned short tileWidth);
 	~Animation();
@@ -24,7 +23,7 @@ private:
 	unsigned short m_tileHeight = DEFAULT_SPRITE_SIZE_X_Y;
 	unsigned short m_tileWidth = DEFAULT_SPRITE_SIZE_X_Y;
 
-	std::map<EntityStatus, SpriteCoordinates> m_spriteCoordinates;
+	std::map<EntityStatus, std::pair<unsigned short, unsigned short>> m_spriteCoordinates;
 	std::vector<EntityStatus> m_entityStatusThatLoops = { EntityStatus::Moving };
 
 	sf::Clock m_clock;

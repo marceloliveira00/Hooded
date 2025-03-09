@@ -2,7 +2,7 @@
 
 Animation::Animation(
 	sf::Sprite* sprite,
-	const std::map<EntityStatus, SpriteCoordinates> spriteCoordinates,
+	const std::map<EntityStatus, std::pair<unsigned short, unsigned short>> spriteCoordinates,
 	const unsigned short tileHeight,
 	const unsigned short tileWidth)
 {
@@ -40,9 +40,9 @@ const void Animation::SetTexture(const EntityDirection entityDirection, EntitySt
 		rectWidth = -rectWidth;
 	}
 
-	SpriteCoordinates coordinates = m_spriteCoordinates[*entityStatus];
+	std::pair<unsigned short, unsigned short> coordinates = m_spriteCoordinates[*entityStatus];
 
-	if (WaitForAnimationToEnd(*entityStatus) && m_textureIndex == GetMaxTextureIndexByMaxTileNumber(coordinates.colNumber))
+	if (WaitForAnimationToEnd(*entityStatus) && m_textureIndex == GetMaxTextureIndexByMaxTileNumber(coordinates.first))
 	{
 		*entityStatus = EntityStatus::Idle;
 		return;
@@ -51,22 +51,22 @@ const void Animation::SetTexture(const EntityDirection entityDirection, EntitySt
 	if (*entityStatus != m_lastEntityStatus) m_clock.restart();
 
 	m_lastEntityStatus = *entityStatus;
-	m_textureIndex = GetTextureIndex(100, coordinates.colNumber, CurrentEntityStateLoops(*entityStatus));
+	m_textureIndex = GetTextureIndex(100, coordinates.first, CurrentEntityStateLoops(*entityStatus));
 
 	switch (*entityStatus)
 	{
 	case EntityStatus::Attacking:
-		m_sprite->setTextureRect(sf::IntRect(m_textureIndex + rectLeft, m_tileHeight * coordinates.rowIndex, rectWidth, m_tileHeight));
+		m_sprite->setTextureRect(sf::IntRect(m_textureIndex + rectLeft, m_tileHeight * coordinates.second, rectWidth, m_tileHeight));
 	case EntityStatus::Crouching:
-		m_sprite->setTextureRect(sf::IntRect(m_textureIndex + rectLeft, m_tileHeight * coordinates.rowIndex, rectWidth, m_tileHeight));
+		m_sprite->setTextureRect(sf::IntRect(m_textureIndex + rectLeft, m_tileHeight * coordinates.second, rectWidth, m_tileHeight));
 	case EntityStatus::Dematerialized:
-		m_sprite->setTextureRect(sf::IntRect(m_textureIndex + rectLeft, m_tileHeight * coordinates.rowIndex, rectWidth, m_tileHeight));
+		m_sprite->setTextureRect(sf::IntRect(m_textureIndex + rectLeft, m_tileHeight * coordinates.second, rectWidth, m_tileHeight));
 	case EntityStatus::Idle:
-		m_sprite->setTextureRect(sf::IntRect(m_textureIndex + rectLeft, m_tileHeight * coordinates.rowIndex, rectWidth, m_tileHeight));
+		m_sprite->setTextureRect(sf::IntRect(m_textureIndex + rectLeft, m_tileHeight * coordinates.second, rectWidth, m_tileHeight));
 	case EntityStatus::Jumping:
-		m_sprite->setTextureRect(sf::IntRect(m_textureIndex + rectLeft, m_tileHeight * coordinates.rowIndex, rectWidth, m_tileHeight));
+		m_sprite->setTextureRect(sf::IntRect(m_textureIndex + rectLeft, m_tileHeight * coordinates.second, rectWidth, m_tileHeight));
 	case EntityStatus::Moving:
-		m_sprite->setTextureRect(sf::IntRect(m_textureIndex + rectLeft, m_tileHeight * coordinates.rowIndex, rectWidth, m_tileHeight));
+		m_sprite->setTextureRect(sf::IntRect(m_textureIndex + rectLeft, m_tileHeight * coordinates.second, rectWidth, m_tileHeight));
 	default:
 		return;
 	}

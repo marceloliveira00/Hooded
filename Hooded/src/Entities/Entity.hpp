@@ -7,7 +7,6 @@
 #include "../Enums/EntityStatus.hpp"
 #include "../Enums/EntityDirection.hpp"
 #include "../GameConfig.hpp"
-#include "../SpriteCoordinates.hpp"
 
 class Entity
 {
@@ -36,10 +35,10 @@ protected:
 
 	sf::Sprite m_sprite;
 	/// Stores the row index and the number of sprites in a texture for a given status
-	std::map<EntityStatus, SpriteCoordinates> m_spriteCoordinates;
+	std::map<EntityStatus, std::pair<unsigned short, unsigned short>> m_spriteCoordinates;
 	sf::RectangleShape m_spriteBoundingRectangle;
 	sf::Texture m_spriteTexture;
 
-	virtual void DefineSpriteCoordinates(std::map<EntityStatus, SpriteCoordinates>& spriteCoordinates);
+	const virtual void DefineSpriteCoordinates(std::map<EntityStatus, std::pair<unsigned short, unsigned short>>& spriteCoordinates) const;
 };
 
