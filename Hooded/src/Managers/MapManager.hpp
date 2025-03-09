@@ -5,8 +5,6 @@
 #include <SFML/Graphics.hpp>
 #include <unordered_set>
 
-#include "../ConvertSketch.hpp"
-#include "../DrawMap.hpp"
 #include "../Enums/EntityStatus.hpp"
 #include "../Enums/Level.hpp"
 #include "../GameConfig.hpp"
@@ -30,11 +28,14 @@ private:
 	sf::Texture m_mapTexture;
 	sf::Texture m_mapPropsTexture;
 	std::vector<sf::Vector2i> m_tiles;
+
+	void ConvertSketch(Map* map, sf::Image mapSketch, unsigned mapSize_X, unsigned mapSize_Y);
+	void DrawMap(const Map* map, sf::Image& mapSketch, sf::Texture& mapTexture, sf::Texture& m_mapPropsTexture, sf::RenderTarget& target);
+	bool DrawMapProps(const Map* map, unsigned short x, unsigned short y, unsigned short& pixelX, unsigned short& pixelY, unsigned short& spriteX, unsigned short& spriteY);
+
 };
 
-#include <SFML/System/Vector2.hpp>
-
-// Custom hash function for sf::Vector2i
+// custom hash function for sf::Vector2i
 struct Vector2iHash
 {
 	std::size_t operator()(const sf::Vector2i& v) const noexcept
@@ -43,7 +44,7 @@ struct Vector2iHash
 	}
 };
 
-// Custom equality operator (needed for unordered_set)
+// custom equality operator (needed for unordered_set)
 struct Vector2iEqual
 {
 	bool operator()(const sf::Vector2i& a, const sf::Vector2i& b) const noexcept

@@ -23,8 +23,6 @@
     <ClInclude Include="src\Entities\BlueHooded.hpp" />
     <ClInclude Include="src\Managers\BackgroundManager.hpp" />
     <ClInclude Include="src\Camera.hpp" />
-    <ClInclude Include="src\ConvertSketch.hpp" />
-    <ClInclude Include="src\DrawMap.hpp" />
     <ClInclude Include="src\Entities\Entity.hpp" />
     <ClInclude Include="src\Enums\Cell.hpp" />
     <ClInclude Include="src\Enums\EntityDirection.hpp" />
@@ -53,8 +51,6 @@
     <ClCompile Include="src\Entities\Skeleton.cpp" />
     <ClCompile Include="src\Managers\BackgroundManager.cpp" />
     <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\ConvertSketch.cpp" />
-    <ClCompile Include="src\DrawMap.cpp" />
     <ClCompile Include="src\Entities\Entity.cpp" />
     <ClCompile Include="src\Managers\GameManager.cpp" />
     <ClCompile Include="src\Entities\Hooded.cpp" />
