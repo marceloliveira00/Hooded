@@ -1,4 +1,4 @@
-#include "../Headers/MapManager.hpp"
+#include "MapManager.hpp"
 
 void MapManager::Load(Level level)
 {

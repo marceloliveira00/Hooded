@@ -1,4 +1,4 @@
-#include "../Headers/Hooded.hpp"
+#include "Hooded.hpp"
 
 const void Hooded::Actions(Camera& camera, const float deltaTime, MapManager& mapManager, std::vector<Entity*>& enemies)
 {

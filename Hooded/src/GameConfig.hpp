@@ -3,7 +3,7 @@
 #include <array>
 #include <vector>
 
-#include "../Headers/Enums/Cell.hpp"
+#include "Enums/Cell.hpp"
 
 constexpr unsigned short DEFAULT_SPRITE_SIZE_X_Y = 32;
 

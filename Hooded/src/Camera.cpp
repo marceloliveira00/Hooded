@@ -1,4 +1,4 @@
-#include "../Headers/Camera.hpp"
+#include "Camera.hpp"
 
 Camera::Camera(float zoomLevel) : m_zoomLevel(zoomLevel)
 {

@@ -3,11 +3,11 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 
-#include "Animation.hpp"
-#include "Enums/EntityStatus.hpp"
-#include "Enums/EntityDirection.hpp"
-#include "GameConfig.hpp"
-#include "SpriteCoordinates.hpp"
+#include "../Animation.hpp"
+#include "../Enums/EntityStatus.hpp"
+#include "../Enums/EntityDirection.hpp"
+#include "../GameConfig.hpp"
+#include "../SpriteCoordinates.hpp"
 
 class Entity
 {

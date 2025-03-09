@@ -5,11 +5,11 @@
 #include <SFML/Graphics.hpp>
 #include <unordered_set>
 
-#include "../Headers/ConvertSketch.hpp"
-#include "../Headers/DrawMap.hpp"
-#include "../Headers/Enums/EntityStatus.hpp"
-#include "../Headers/Enums/Level.hpp"
-#include "../Headers/GameConfig.hpp"
+#include "../ConvertSketch.hpp"
+#include "../DrawMap.hpp"
+#include "../Enums/EntityStatus.hpp"
+#include "../Enums/Level.hpp"
+#include "../GameConfig.hpp"
 
 class MapManager
 {

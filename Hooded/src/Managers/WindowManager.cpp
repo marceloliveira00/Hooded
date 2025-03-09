@@ -1,4 +1,4 @@
-#include "../Headers/WindowManager.hpp"
+#include "WindowManager.hpp"
 
 WindowManager::WindowManager() : m_event(new sf::Event())
 {

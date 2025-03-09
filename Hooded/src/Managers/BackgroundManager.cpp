@@ -1,4 +1,4 @@
-#include "../Headers/BackgroundManager.hpp"
+#include "BackgroundManager.hpp"
 
 void BackgroundManager::Load()
 {

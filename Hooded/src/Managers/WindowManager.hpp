@@ -3,8 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "../Headers/Camera.hpp"
-#include "../Headers/GameConfig.hpp"
+#include "../Camera.hpp"
+#include "../GameConfig.hpp"
 
 class WindowManager
 {

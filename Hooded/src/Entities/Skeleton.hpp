@@ -2,20 +2,20 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../Headers/Entity.hpp"
-#include "../Headers/MapManager.hpp"
+#include "Entity.hpp"
+#include "../Managers/MapManager.hpp"
 
-class BlueHooded : public Entity
+class Skeleton : protected Entity
 {
 public:
-	BlueHooded();
+	Skeleton();
 
 	const void Render(sf::RenderTarget* target) const;
 	const void Update(float deltaTime, MapManager& mapManager);
 
 private:
 	void InitVariables();
-	void InitBlueHooded();
+	void InitSkeleton();
 	const void Move();
 };
 

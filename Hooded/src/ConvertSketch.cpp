@@ -1,4 +1,4 @@
-#include "../Headers/ConvertSketch.hpp"
+#include "ConvertSketch.hpp"
 
 void ConvertSketch(Map* map, sf::Image mapSketch, unsigned mapSketch_X, unsigned mapSketch_Y)
 {

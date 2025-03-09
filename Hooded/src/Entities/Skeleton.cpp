@@ -1,19 +1,20 @@
-#include "../Headers/Swordsman.hpp"
+#include "Skeleton.hpp"
 
-void Swordsman::InitVariables()
+void Skeleton::InitVariables()
 {
 	m_health = 100.f;
 	m_posX = 300.f;
-	m_posY = 313.5f;
+	m_posY = 319.799927f;
 	m_speed = .08f;
+	m_tileWidth = 34;
+	m_tileHeight = 32;
 }
 
-void Swordsman::InitSwordsman()
+void Skeleton::InitSkeleton()
 {
-	m_spriteTexture.loadFromFile("Assets/Entities/Swordsman.png");
-	m_sprite.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
+	m_spriteTexture.loadFromFile("Assets/Entities/Skeleton.png");
+	m_sprite.setTextureRect(sf::IntRect(8, 16, m_tileWidth, m_tileHeight));
 	m_sprite.setPosition(m_posX, m_posY);
-	m_sprite.setScale(1.2f, 1.2f);
 	m_sprite.setTexture(m_spriteTexture);
 
 	m_spriteBoundingRectangle.setSize(sf::Vector2f(m_tileWidth, m_tileHeight));
@@ -21,27 +22,26 @@ void Swordsman::InitSwordsman()
 	m_spriteBoundingRectangle.setOutlineColor(sf::Color::Red);
 	m_spriteBoundingRectangle.setOutlineThickness(.5f);
 	m_spriteBoundingRectangle.setPosition(m_posX, m_posY);
-	m_spriteBoundingRectangle.setScale(1.2f, 1.2f);
 }
 
-Swordsman::Swordsman()
+Skeleton::Skeleton()
 {
 	InitVariables();
-	InitSwordsman();
+	InitSkeleton();
 }
 
-const void Swordsman::Render(sf::RenderTarget* target) const
+const void Skeleton::Render(sf::RenderTarget* target) const
 {
 	target->draw(m_sprite);
 	target->draw(m_spriteBoundingRectangle);
 }
 
-const void Swordsman::Move()
+const void Skeleton::Update(float deltaTime, MapManager& mapManager)
 {
 	return void();
 }
 
-const void Swordsman::Update(float deltaTime, MapManager& mapManager)
+const void Skeleton::Move()
 {
-	Move();
+	return void();
 }

@@ -2,9 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Camera.hpp"
-#include "Entity.hpp"
-#include "MapManager.hpp"
+#include "../Camera.hpp"
+#include "../Entities/Entity.hpp"
+#include "../Managers/MapManager.hpp"
 
 class Hooded : public Entity
 {

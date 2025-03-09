@@ -1,4 +1,4 @@
-#include "../Headers/SpriteCoordinates.hpp"
+#include "SpriteCoordinates.hpp"
 
 SpriteCoordinates::SpriteCoordinates() { }
 

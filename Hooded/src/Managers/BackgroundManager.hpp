@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../Headers/Camera.hpp"
+#include "../Camera.hpp"
 
 class BackgroundManager
 {

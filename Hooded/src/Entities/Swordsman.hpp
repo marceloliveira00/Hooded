@@ -2,8 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../Headers/Entity.hpp"
-#include "../Headers/MapManager.hpp"
+#include "Entity.hpp"
+#include "../Managers/MapManager.hpp"
 
 class Swordsman : protected Entity
 {

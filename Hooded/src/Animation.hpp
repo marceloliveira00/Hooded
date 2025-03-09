@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
 #include "Enums/EntityDirection.hpp"
 #include "Enums/EntityStatus.hpp"
 #include "GameConfig.hpp"

@@ -2,11 +2,11 @@
 
 #include <vector>
 
-#include "../Headers/WindowManager.hpp"
-#include "../Headers/BackgroundManager.hpp"
-#include "../Headers/MapManager.hpp"
-#include "../Headers/Hooded.hpp"
-#include "../Headers/BlueHooded.hpp"
+#include "BackgroundManager.hpp"
+#include "MapManager.hpp"
+#include "WindowManager.hpp"
+#include "../Entities/Hooded.hpp"
+#include "../Entities/BlueHooded.hpp"
 
 class GameManager
 {

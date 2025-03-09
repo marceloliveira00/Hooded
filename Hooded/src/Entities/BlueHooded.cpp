@@ -1,4 +1,4 @@
-#include "../Headers/BlueHooded.hpp"
+#include "BlueHooded.hpp"
 
 void BlueHooded::InitVariables()
 {

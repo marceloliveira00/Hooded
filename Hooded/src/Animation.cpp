@@ -1,4 +1,4 @@
-#include "../Headers/Animation.hpp"
+#include "Animation.hpp"
 
 Animation::Animation(
 	sf::Sprite* sprite,

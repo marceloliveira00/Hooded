@@ -1,4 +1,4 @@
-#include "../Headers/Entity.hpp"
+#include "Entity.hpp"
 
 const void Entity::TakeDamage(const float damage)
 {
