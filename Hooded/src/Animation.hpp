@@ -11,19 +11,19 @@ class Animation
 public:
 	Animation(
 		sf::Sprite* sprite,
-		const std::map<EntityStatus, std::pair<unsigned short, unsigned short>> spriteCoordinates,
+		const SpriteCoordinates spriteCoordinates,
 		const unsigned short tileHeight,
 		const unsigned short tileWidth);
 	~Animation();
 
-	const void SetTexture(const EntityDirection entityDirection, EntityStatus* entityStatus);
+	const void SetTexture(const EntityDirection& entityDirection, EntityStatus* entityStatus);
 
 private:
 	unsigned short m_textureIndex = 0;
 	unsigned short m_tileHeight = DEFAULT_SPRITE_SIZE_X_Y;
 	unsigned short m_tileWidth = DEFAULT_SPRITE_SIZE_X_Y;
 
-	std::map<EntityStatus, std::pair<unsigned short, unsigned short>> m_spriteCoordinates;
+	SpriteCoordinates m_spriteCoordinates;
 	std::vector<EntityStatus> m_entityStatusThatLoops = { EntityStatus::Moving };
 
 	sf::Clock m_clock;

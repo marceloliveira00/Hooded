@@ -2,7 +2,7 @@
 
 Animation::Animation(
 	sf::Sprite* sprite,
-	const std::map<EntityStatus, std::pair<unsigned short, unsigned short>> spriteCoordinates,
+	const SpriteCoordinates spriteCoordinates,
 	const unsigned short tileHeight,
 	const unsigned short tileWidth)
 {
@@ -12,23 +12,25 @@ Animation::Animation(
 	m_tileWidth = tileWidth;
 }
 
-Animation::~Animation() { }
+Animation::~Animation() {}
 
 const bool Animation::CurrentEntityStateLoops(EntityStatus& entityStatus) const
 {
 	return std::count(m_entityStatusThatLoops.begin(), m_entityStatusThatLoops.end(), entityStatus) > 0;
 }
 
+/// \brief Calculates the maximum texture index based on a given number of tiles
 const int Animation::GetMaxTextureIndexByMaxTileNumber(short maxTile) const { return (maxTile - 1) * m_tileWidth; }
 
 const int Animation::GetTextureIndex(unsigned short frames, unsigned short tiles, bool restartAnimation) const
 {
+	// if restartAnimation is false and it's at the last frame, it returns m_textureIndex, keeping the last frame.
 	if (!restartAnimation && m_textureIndex == (tiles - 1) * m_tileWidth) return m_textureIndex;
 
 	return (m_clock.getElapsedTime().asMilliseconds() / frames % tiles) * m_tileWidth;
 }
 
-const void Animation::SetTexture(const EntityDirection entityDirection, EntityStatus* entityStatus)
+const void Animation::SetTexture(const EntityDirection& entityDirection, EntityStatus* entityStatus)
 {
 	short rectLeft = 0;
 	short rectWidth = m_tileWidth;

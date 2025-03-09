@@ -8,4 +8,5 @@ enum EntityStatus : unsigned short
 	Idle,
 	Jumping,
 	Moving,
+	TakingDamage,
 };

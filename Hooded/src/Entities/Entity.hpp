@@ -16,7 +16,6 @@ public:
 
 protected:
 	Animation* m_animation = nullptr;
-
 	EntityDirection m_spriteDirection = EntityDirection::Right;
 	EntityStatus m_spriteStatus = EntityStatus::Idle;
 
@@ -34,11 +33,10 @@ protected:
 	unsigned short m_tileWidth = DEFAULT_SPRITE_SIZE_X_Y;
 
 	sf::Sprite m_sprite;
-	/// Stores the row index and the number of sprites in a texture for a given status
-	std::map<EntityStatus, std::pair<unsigned short, unsigned short>> m_spriteCoordinates;
+	SpriteCoordinates m_spriteCoordinates;
 	sf::RectangleShape m_spriteBoundingRectangle;
 	sf::Texture m_spriteTexture;
 
-	const virtual void DefineSpriteCoordinates(std::map<EntityStatus, std::pair<unsigned short, unsigned short>>& spriteCoordinates) const;
+	const virtual void DefineSpriteCoordinates(SpriteCoordinates& spriteCoordinates) const;
 };
 
