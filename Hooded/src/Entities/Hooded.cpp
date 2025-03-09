@@ -2,9 +2,9 @@
 
 const void Hooded::Actions(Camera& camera, const float deltaTime, MapManager& mapManager, std::vector<Entity*>& enemies)
 {
-	if (m_spriteStatus != EntityStatus::Attacking && m_spriteStatus != EntityStatus::Crouching && m_spriteOnGround)
+	if (*m_spriteStatus != EntityStatus::Attacking && *m_spriteStatus != EntityStatus::Crouching && m_spriteOnGround)
 	{
-		m_spriteStatus = EntityStatus::Idle;
+		*m_spriteStatus = EntityStatus::Idle;
 	}
 
 	Attack(deltaTime, enemies);
@@ -19,13 +19,13 @@ const void Hooded::Actions(Camera& camera, const float deltaTime, MapManager& ma
 #include <iostream>
 void Hooded::Attack(const float deltaTime, std::vector<Entity*>& enemies)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) m_spriteStatus = EntityStatus::Attacking;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) *m_spriteStatus = EntityStatus::Attacking;
 
-	if (m_spriteStatus == EntityStatus::Attacking)
+	if (*m_spriteStatus == EntityStatus::Attacking)
 	{
 		sf::FloatRect attackHitbox;
 
-		if (m_spriteDirection == EntityDirection::Right)
+		if (*m_spriteDirection == EntityDirection::Right)
 			attackHitbox = sf::FloatRect(m_posX + m_tileWidth, m_posY, m_attackRange, m_tileHeight);
 		else
 			attackHitbox = sf::FloatRect(m_posX - m_attackRange, m_posY, m_attackRange, m_tileHeight);
@@ -35,12 +35,34 @@ void Hooded::Attack(const float deltaTime, std::vector<Entity*>& enemies)
 		{
 			if (enemy->GetBounds().intersects(attackHitbox))
 			{
-				std::cout << "Enemy hit" << std::endl;
+				std::cout << enemy->GetSpriteStatus() << std::endl;
 				enemy->TakeDamage(10);
 			}
 			else std::cout << "0" << std::endl;
 		}
 	}
+}
+
+const void Hooded::DefineSpriteCoordinates(SpriteCoordinates& spriteCoordinates) const
+{
+	constexpr std::pair<unsigned short, unsigned short> attackCoordinates(8, 8);
+	constexpr std::pair<unsigned short, unsigned short> crouchingCoordinates(4, 4);
+	constexpr std::pair<unsigned short, unsigned short> dematerializedCoordinates(4, 6);
+	constexpr std::pair<unsigned short, unsigned short> idleCoordinates(1, 0);
+	constexpr std::pair<unsigned short, unsigned short> jumpingCoordinates(8, 5);
+	constexpr std::pair<unsigned short, unsigned short> movingCoordinates(8, 3);
+	constexpr std::pair<unsigned short, unsigned short> takingDamageCoordinates(7, 4);
+
+	spriteCoordinates =
+	{
+		{ EntityStatus::Attacking, attackCoordinates },
+		{ EntityStatus::Crouching, crouchingCoordinates },
+		{ EntityStatus::Dematerialized, dematerializedCoordinates },
+		{ EntityStatus::Idle, idleCoordinates },
+		{ EntityStatus::Jumping, jumpingCoordinates },
+		{ EntityStatus::Moving, movingCoordinates },
+		{ EntityStatus::TakingDamage, takingDamageCoordinates },
+	};
 }
 
 void Hooded::InitVariables()
@@ -87,17 +109,17 @@ Hooded::~Hooded()
 const void Hooded::Dematerialize()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		m_spriteStatus = EntityStatus::Dematerialized;
+		*m_spriteStatus = EntityStatus::Dematerialized;
 }
 
 const void Hooded::Move(const float deltaTime, MapManager& mapManager)
 {
-	if (m_spriteStatus == EntityStatus::Attacking) return;
+	if (*m_spriteStatus == EntityStatus::Attacking) return;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
 		&& !mapManager.MapCollision(m_posX, m_posY - 1 * m_speed * deltaTime,
-			sf::Vector2i(m_tileWidth, m_tileHeight), m_spriteStatus)
-		&& m_spriteStatus != EntityStatus::Jumping || m_jumpPosY != 0.f && m_jumpPosY < 2.f)
+			sf::Vector2i(m_tileWidth, m_tileHeight), *m_spriteStatus)
+		&& *m_spriteStatus != EntityStatus::Jumping || m_jumpPosY != 0.f && m_jumpPosY < 2.f)
 	{
 
 		if (m_jumpPosY == 0) m_jumpPosY += m_weight;
@@ -105,37 +127,37 @@ const void Hooded::Move(const float deltaTime, MapManager& mapManager)
 		m_jumpPosY += m_jumpSpeed;
 
 		m_posY -= m_jumpPosY;
-		m_spriteStatus = EntityStatus::Jumping;
+		*m_spriteStatus = EntityStatus::Jumping;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || m_spriteStatus == EntityStatus::Crouching)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || *m_spriteStatus == EntityStatus::Crouching)
 	{
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
-			m_spriteStatus = EntityStatus::Idle;
+			*m_spriteStatus = EntityStatus::Idle;
 			return;
 		}
 
-		m_spriteStatus = EntityStatus::Crouching;
+		*m_spriteStatus = EntityStatus::Crouching;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !mapManager.MapCollision(m_posX - 1 * m_speed * deltaTime, m_posY,
-		sf::Vector2i(m_tileWidth, m_tileHeight), m_spriteStatus) && m_spriteStatus != EntityStatus::Crouching)
+		sf::Vector2i(m_tileWidth, m_tileHeight), *m_spriteStatus) && *m_spriteStatus != EntityStatus::Crouching)
 	{
 		m_posX -= 1 * m_speed * deltaTime;
-		m_spriteDirection = EntityDirection::Left;
-		m_spriteStatus = m_spriteOnGround ? EntityStatus::Moving : EntityStatus::Jumping;
+		*m_spriteDirection = EntityDirection::Left;
+		*m_spriteStatus = m_spriteOnGround ? EntityStatus::Moving : EntityStatus::Jumping;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !mapManager.MapCollision(m_posX + 1 * m_speed * deltaTime, m_posY,
-		sf::Vector2i(m_tileWidth, m_tileHeight), m_spriteStatus) && m_spriteStatus != EntityStatus::Crouching)
+		sf::Vector2i(m_tileWidth, m_tileHeight), *m_spriteStatus) && *m_spriteStatus != EntityStatus::Crouching)
 	{
 		m_posX += 1 * m_speed * deltaTime;
-		m_spriteDirection = EntityDirection::Right;
-		m_spriteStatus = m_spriteOnGround ? EntityStatus::Moving : EntityStatus::Jumping;
+		*m_spriteDirection = EntityDirection::Right;
+		*m_spriteStatus = m_spriteOnGround ? EntityStatus::Moving : EntityStatus::Jumping;
 	}
 }
 
 const void Hooded::Render(sf::RenderTarget* target)
 {
-	m_animation->SetTexture(m_spriteDirection, &m_spriteStatus);
+	m_animation->SetTexture(*m_spriteDirection, *m_spriteStatus);
 
 	target->draw(m_sprite);
 	target->draw(m_spriteBoundingRectangle);
@@ -148,7 +170,7 @@ const void Hooded::ResetJump(const float deltaTime, MapManager& mapManager)
 	else
 	{
 		m_posY += m_weight * m_speed * deltaTime;
-		m_spriteStatus = EntityStatus::Jumping;
+		*m_spriteStatus = EntityStatus::Jumping;
 		m_spriteOnGround = false;
 	}
 }

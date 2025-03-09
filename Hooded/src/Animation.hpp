@@ -16,7 +16,7 @@ public:
 		const unsigned short tileWidth);
 	~Animation();
 
-	const void SetTexture(const EntityDirection& entityDirection, EntityStatus* entityStatus);
+	const void SetTexture(const EntityDirection& entityDirection, EntityStatus& entityStatus);
 
 private:
 	unsigned short m_textureIndex = 0;

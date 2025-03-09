@@ -11,13 +11,16 @@
 class Entity
 {
 public:
+	~Entity();
+
 	const sf::FloatRect GetBounds() const { return m_sprite.getGlobalBounds(); }
+	const EntityStatus GetSpriteStatus() const { return *m_spriteStatus; }
 	const void TakeDamage(const float damage);
 
 protected:
 	Animation* m_animation = nullptr;
-	EntityDirection m_spriteDirection = EntityDirection::Right;
-	EntityStatus m_spriteStatus = EntityStatus::Idle;
+	EntityDirection* m_spriteDirection = new EntityDirection(EntityDirection::Right);
+	EntityStatus* m_spriteStatus = new EntityStatus(EntityStatus::Idle);
 
 	float m_attackRange = 0.f;
 	float m_health = 0.f;
@@ -37,6 +40,6 @@ protected:
 	sf::RectangleShape m_spriteBoundingRectangle;
 	sf::Texture m_spriteTexture;
 
-	const virtual void DefineSpriteCoordinates(SpriteCoordinates& spriteCoordinates) const;
+	const virtual void DefineSpriteCoordinates(SpriteCoordinates& spriteCoordinates) const = 0;
 };
 
