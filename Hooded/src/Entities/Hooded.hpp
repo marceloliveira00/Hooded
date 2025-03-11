@@ -10,7 +10,6 @@ class Hooded : public Entity
 {
 public:
 	Hooded();
-	~Hooded();
 
 	const void Render(sf::RenderTarget* target);
 	const void Update(Camera& camera, float deltaTime, MapManager& mapManager, std::vector<Entity*>& entities);

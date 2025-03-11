@@ -55,11 +55,6 @@ BlueHooded::BlueHooded()
 	InitBlueHooded();
 }
 
-BlueHooded::~BlueHooded()
-{
-	delete m_animation;
-}
-
 const void BlueHooded::Render(sf::RenderTarget* target) const
 {
 	m_animation->SetTexture(*m_spriteDirection, *m_spriteStatus);

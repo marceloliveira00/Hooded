@@ -9,7 +9,6 @@ class BlueHooded : public Entity
 {
 public:
 	BlueHooded();
-	~BlueHooded();
 
 	const void Render(sf::RenderTarget* target) const;
 	const void Update(float deltaTime, MapManager& mapManager);

@@ -101,11 +101,6 @@ Hooded::Hooded()
 	InitHooded();
 }
 
-Hooded::~Hooded()
-{
-	delete m_animation;
-}
-
 const void Hooded::Dematerialize()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
