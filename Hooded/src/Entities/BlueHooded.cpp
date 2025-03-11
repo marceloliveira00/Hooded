@@ -22,7 +22,7 @@ const void BlueHooded::DefineSpriteCoordinates(SpriteCoordinates& spriteCoordina
 	};
 }
 
-void BlueHooded::InitVariables()
+const void BlueHooded::InitVariables()
 {
 	m_health = 100.f;
 	m_posX = 300.f;
@@ -32,7 +32,7 @@ void BlueHooded::InitVariables()
 	DefineSpriteCoordinates(m_spriteCoordinates);
 }
 
-void BlueHooded::InitBlueHooded()
+const void BlueHooded::InitBlueHooded()
 {
 	m_spriteTexture.loadFromFile("Assets/Entities/Hooded_Blue.png");
 	m_sprite.setTextureRect(sf::IntRect(32, 0, -m_tileWidth, m_tileHeight));
@@ -63,9 +63,9 @@ const void BlueHooded::Render(sf::RenderTarget* target) const
 	target->draw(m_spriteBoundingRectangle);
 }
 
-const void BlueHooded::Update(float deltaTime, MapManager& mapManager)
+const void BlueHooded::Update(const float deltaTime, const MapManager& mapManager)
 {
-	return void();
+	Move();
 }
 
 const void BlueHooded::Move()

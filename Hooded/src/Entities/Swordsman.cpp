@@ -1,6 +1,6 @@
 #include "Swordsman.hpp"
 
-void Swordsman::InitVariables()
+const void Swordsman::InitVariables()
 {
 	m_health = 100.f;
 	m_posX = 300.f;
@@ -8,7 +8,7 @@ void Swordsman::InitVariables()
 	m_speed = .08f;
 }
 
-void Swordsman::InitSwordsman()
+const void Swordsman::InitSwordsman()
 {
 	m_spriteTexture.loadFromFile("Assets/Entities/Swordsman.png");
 	m_sprite.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
@@ -41,7 +41,7 @@ const void Swordsman::Move()
 	return void();
 }
 
-const void Swordsman::Update(float deltaTime, MapManager& mapManager)
+const void Swordsman::Update(const float deltaTime, const MapManager& mapManager)
 {
 	Move();
 }

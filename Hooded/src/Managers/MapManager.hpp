@@ -17,10 +17,10 @@ public:
 	MapManager();
 	~MapManager();
 
-	void Load(Level level);
-	bool MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextSize, EntityStatus status);
-	const void Render(sf::RenderTarget& target);
-	bool SpriteOnGround(float posX, float posY, sf::Vector2i size);
+	const void Load(const Level level);
+	const bool MapCollision(const float nextPosX, const float nextPosY, const sf::Vector2i nextSize, const EntityStatus status) const;
+	const void Render(sf::RenderTarget& target) const;
+	const bool SpriteOnGround(float posX, float posY, sf::Vector2i size) const;
 
 private:
 	sf::Sprite m_cellSprite;
@@ -29,10 +29,9 @@ private:
 	sf::Texture m_mapPropsTexture;
 	std::vector<sf::Vector2i> m_tiles;
 
-	void ConvertSketch(Map* map, sf::Image mapSketch, unsigned mapSize_X, unsigned mapSize_Y);
-	void DrawMap(const Map* map, sf::Image& mapSketch, sf::Texture& mapTexture, sf::Texture& m_mapPropsTexture, sf::RenderTarget& target);
-	bool DrawMapProps(const Map* map, unsigned short x, unsigned short y, unsigned short& pixelX, unsigned short& pixelY, unsigned short& spriteX, unsigned short& spriteY);
-
+	const void ConvertSketch(Map* map, sf::Image mapSketch, unsigned mapSize_X, unsigned mapSize_Y) const;
+	const void DrawMap(const Map* map, const sf::Image& mapSketch, const sf::Texture& mapTexture, const sf::Texture& mapPropsTexture, sf::RenderTarget& target) const;
+	const bool DrawMapProps(const Map* map, unsigned short x, unsigned short y, unsigned short& pixelX, unsigned short& pixelY, unsigned short& spriteX, unsigned short& spriteY) const;
 };
 
 // custom hash function for sf::Vector2i

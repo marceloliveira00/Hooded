@@ -11,11 +11,11 @@ public:
 	Swordsman();
 
 	const void Render(sf::RenderTarget* target) const;
-	const void Update(float deltaTime, MapManager& mapManager);
+	const void Update(const float deltaTime, const MapManager& mapManager);
 
 private:
-	void InitVariables();
-	void InitSwordsman();
+	const void InitVariables();
+	const void InitSwordsman();
 	const void Move();
 };
 

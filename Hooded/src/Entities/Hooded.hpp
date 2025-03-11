@@ -12,16 +12,16 @@ public:
 	Hooded();
 
 	const void Render(sf::RenderTarget* target);
-	const void Update(Camera& camera, float deltaTime, MapManager& mapManager, std::vector<Entity*>& entities);
+	const void Update(Camera& camera, const float deltaTime, const MapManager& mapManager, const std::vector<Entity*>& entities);
 
 private:
-	const void Actions(Camera& camera, const float deltaTime, MapManager& mapManager, std::vector<Entity*>& enemies);
-	void Attack(const float deltaTime, std::vector<Entity*>& enemies);
+	const void Actions(Camera& camera, const float deltaTime, const MapManager& mapManager, const std::vector<Entity*>& enemies);
+	const void Attack(const float deltaTime, const std::vector<Entity*>& enemies);
 	const void DefineSpriteCoordinates(SpriteCoordinates& spriteCoordinates) const override;
-	void InitVariables();
-	void InitHooded();
-	const void Dematerialize();
-	const void ResetJump(const float deltaTime, MapManager& mapManager);
-	const void Move(const float deltaTime, MapManager& mapManager);
+	const void InitVariables();
+	const void InitHooded();
+	const void Dematerialize() const;
+	const void ResetJump(const float deltaTime, const MapManager& mapManager);
+	const void Move(const float deltaTime, const MapManager& mapManager);
 };
 

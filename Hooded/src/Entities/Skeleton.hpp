@@ -11,11 +11,11 @@ public:
 	Skeleton();
 
 	const void Render(sf::RenderTarget* target) const;
-	const void Update(float deltaTime, MapManager& mapManager);
+	const void Update(const float deltaTime, MapManager& mapManager);
 
 private:
-	void InitVariables();
-	void InitSkeleton();
+	const void InitVariables();
+	const void InitSkeleton();
 	const void Move();
 };
 

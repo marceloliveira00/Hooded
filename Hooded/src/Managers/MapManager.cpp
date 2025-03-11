@@ -1,6 +1,6 @@
 #include "MapManager.hpp"
 
-void MapManager::ConvertSketch(Map* map, sf::Image mapSketch, unsigned mapSketch_X, unsigned mapSketch_Y)
+const void MapManager::ConvertSketch(Map* map, sf::Image mapSketch, unsigned mapSketch_X, unsigned mapSketch_Y) const
 {
 	map->clear();
 	map->resize(mapSketch_X);
@@ -34,7 +34,7 @@ void MapManager::ConvertSketch(Map* map, sf::Image mapSketch, unsigned mapSketch
 	}
 }
 
-void MapManager::DrawMap(const Map* map, sf::Image& mapSketch, sf::Texture& mapTexture, sf::Texture& mapPropsTexture, sf::RenderTarget& target)
+const void MapManager::DrawMap(const Map* map, const sf::Image& mapSketch, const sf::Texture& mapTexture, const sf::Texture& mapPropsTexture, sf::RenderTarget& target) const
 {
 	// TODO: only draw the part of the map that is visible on the screen.
 
@@ -93,7 +93,7 @@ void MapManager::DrawMap(const Map* map, sf::Image& mapSketch, sf::Texture& mapT
 	}
 }
 
-bool MapManager::DrawMapProps(const Map* map, unsigned short x, unsigned short y, unsigned short& pixelX, unsigned short& pixelY, unsigned short& spriteX, unsigned short& spriteY)
+const bool MapManager::DrawMapProps(const Map* map, unsigned short x, unsigned short y, unsigned short& pixelX, unsigned short& pixelY, unsigned short& spriteX, unsigned short& spriteY) const
 {
 	if ((*map)[x][y] == Cell::Box)
 	{
@@ -155,7 +155,7 @@ bool MapManager::DrawMapProps(const Map* map, unsigned short x, unsigned short y
 	return false;
 }
 
-void MapManager::Load(Level level)
+const void MapManager::Load(const Level level)
 {
 	const std::string levelPath = "Assets/Maps/LevelSketch" + std::to_string(level);
 	m_mapSketch.loadFromFile(levelPath + ".png"); // set map sketch
@@ -167,7 +167,7 @@ void MapManager::Load(Level level)
 	m_mapPropsTexture.loadFromFile("Assets/Props/VillageProps.png");
 }
 
-bool MapManager::MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextSize, EntityStatus status)
+const bool MapManager::MapCollision(const float nextPosX, const float nextPosY, const sf::Vector2i nextSize, const EntityStatus status) const
 {
 	if (status == EntityStatus::Dematerialized) return false;
 
@@ -202,12 +202,12 @@ bool MapManager::MapCollision(float nextPosX, float nextPosY, sf::Vector2i nextS
 	return false;
 }
 
-const void MapManager::Render(sf::RenderTarget& target)
+const void MapManager::Render(sf::RenderTarget& target) const
 {
 	DrawMap(m_map, m_mapSketch, m_mapTexture, m_mapPropsTexture, target);
 }
 
-bool MapManager::SpriteOnGround(float posX, float posY, sf::Vector2i size)
+const bool MapManager::SpriteOnGround(float posX, float posY, sf::Vector2i size) const
 {
 	// calculate bottom coordinate (avoiding rounding issues)
 	const int bottom = static_cast<int>(std::floor(posY + size.y));

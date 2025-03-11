@@ -11,12 +11,12 @@ public:
 	BlueHooded();
 
 	const void Render(sf::RenderTarget* target) const;
-	const void Update(float deltaTime, MapManager& mapManager);
+	const void Update(const float deltaTime, const MapManager& mapManager);
 
 private:
 	const void DefineSpriteCoordinates(SpriteCoordinates& spriteCoordinates) const override;
-	void InitVariables();
-	void InitBlueHooded();
+	const void InitVariables();
+	const void InitBlueHooded();
 	const void Move();
 };
 

@@ -1,6 +1,6 @@
 #include "Skeleton.hpp"
 
-void Skeleton::InitVariables()
+const void Skeleton::InitVariables()
 {
 	m_health = 100.f;
 	m_posX = 300.f;
@@ -10,7 +10,7 @@ void Skeleton::InitVariables()
 	m_tileHeight = 32;
 }
 
-void Skeleton::InitSkeleton()
+const void Skeleton::InitSkeleton()
 {
 	m_spriteTexture.loadFromFile("Assets/Entities/Skeleton.png");
 	m_sprite.setTextureRect(sf::IntRect(8, 16, m_tileWidth, m_tileHeight));
@@ -36,9 +36,9 @@ const void Skeleton::Render(sf::RenderTarget* target) const
 	target->draw(m_spriteBoundingRectangle);
 }
 
-const void Skeleton::Update(float deltaTime, MapManager& mapManager)
+const void Skeleton::Update(const float deltaTime, MapManager& mapManager)
 {
-	return void();
+	Move();
 }
 
 const void Skeleton::Move()

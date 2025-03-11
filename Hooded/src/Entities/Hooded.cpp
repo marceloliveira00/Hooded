@@ -1,6 +1,6 @@
 #include "Hooded.hpp"
 
-const void Hooded::Actions(Camera& camera, const float deltaTime, MapManager& mapManager, std::vector<Entity*>& enemies)
+const void Hooded::Actions(Camera& camera, const float deltaTime, const MapManager& mapManager, const std::vector<Entity*>& enemies)
 {
 	if (*m_spriteStatus != EntityStatus::Attacking && *m_spriteStatus != EntityStatus::Crouching && m_spriteOnGround)
 	{
@@ -17,7 +17,7 @@ const void Hooded::Actions(Camera& camera, const float deltaTime, MapManager& ma
 }
 
 #include <iostream>
-void Hooded::Attack(const float deltaTime, std::vector<Entity*>& enemies)
+const void Hooded::Attack(const float deltaTime, const std::vector<Entity*>& enemies)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) *m_spriteStatus = EntityStatus::Attacking;
 
@@ -65,7 +65,7 @@ const void Hooded::DefineSpriteCoordinates(SpriteCoordinates& spriteCoordinates)
 	};
 }
 
-void Hooded::InitVariables()
+const void Hooded::InitVariables()
 {
 	m_attackRange = 1.f;
 	m_weight = 1.2f;
@@ -79,7 +79,7 @@ void Hooded::InitVariables()
 	DefineSpriteCoordinates(m_spriteCoordinates);
 }
 
-void Hooded::InitHooded()
+const void Hooded::InitHooded()
 {
 	m_spriteTexture.loadFromFile("Assets/Entities/Hooded.png");
 	m_sprite.setTextureRect(sf::IntRect(0, 0, m_tileWidth, m_tileHeight));
@@ -101,13 +101,13 @@ Hooded::Hooded()
 	InitHooded();
 }
 
-const void Hooded::Dematerialize()
+const void Hooded::Dematerialize() const
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		*m_spriteStatus = EntityStatus::Dematerialized;
 }
 
-const void Hooded::Move(const float deltaTime, MapManager& mapManager)
+const void Hooded::Move(const float deltaTime, const MapManager& mapManager)
 {
 	if (*m_spriteStatus == EntityStatus::Attacking) return;
 
@@ -158,7 +158,7 @@ const void Hooded::Render(sf::RenderTarget* target)
 	target->draw(m_spriteBoundingRectangle);
 }
 
-const void Hooded::ResetJump(const float deltaTime, MapManager& mapManager)
+const void Hooded::ResetJump(const float deltaTime, const MapManager& mapManager)
 {
 	m_spriteOnGround = mapManager.SpriteOnGround(m_posX, m_posY + m_weight * m_speed * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight));
 	if (m_spriteOnGround) m_jumpPosY = 0.f;
@@ -170,7 +170,7 @@ const void Hooded::ResetJump(const float deltaTime, MapManager& mapManager)
 	}
 }
 
-const void Hooded::Update(Camera& camera, const float deltaTime, MapManager& mapManager, std::vector<Entity*>& entities)
+const void Hooded::Update(Camera& camera, const float deltaTime, const MapManager& mapManager, const std::vector<Entity*>& entities)
 {
 	Dematerialize();
 	Actions(camera, deltaTime, mapManager, entities);
