@@ -1,22 +1,15 @@
 #include "Hooded.hpp"
 
-const void Hooded::Actions(Camera& camera, const float deltaTime, const MapManager& mapManager, const std::vector<Entity*>& enemies)
+const void Hooded::Actions(const float deltaTime, const MapManager& mapManager, const std::vector<Entity*>& enemies)
 {
 	if (*m_spriteStatus != EntityStatus::Attacking && *m_spriteStatus != EntityStatus::Crouching && m_spriteOnGround)
-	{
 		*m_spriteStatus = EntityStatus::Idle;
-	}
 
 	Attack(deltaTime, enemies);
-	ResetJump(deltaTime, mapManager);
+	Jump(deltaTime, mapManager);
 	Move(deltaTime, mapManager);
-
-	m_spriteBoundingRectangle.setPosition(m_posX, m_posY);
-	m_sprite.setPosition(m_posX, m_posY);
-	camera.SetPosition(m_posX, m_posY);
 }
 
-#include <iostream>
 const void Hooded::Attack(const float deltaTime, const std::vector<Entity*>& enemies)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) *m_spriteStatus = EntityStatus::Attacking;
@@ -30,16 +23,8 @@ const void Hooded::Attack(const float deltaTime, const std::vector<Entity*>& ene
 		else
 			attackHitbox = sf::FloatRect(m_posX - m_attackRange, m_posY, m_attackRange, m_tileHeight);
 
-		// check for collision with enemies
 		for (auto& enemy : enemies)
-		{
-			if (enemy->GetBounds().intersects(attackHitbox))
-			{
-				std::cout << enemy->GetSpriteStatus() << std::endl;
-				enemy->TakeDamage(10);
-			}
-			else std::cout << "0" << std::endl;
-		}
+			if (enemy->GetBounds().intersects(attackHitbox)) enemy->TakeDamage(10); // check for collision with enemies
 	}
 }
 
@@ -65,18 +50,16 @@ const void Hooded::DefineSpriteCoordinates(SpriteCoordinates& spriteCoordinates)
 	};
 }
 
-const void Hooded::InitVariables()
+const void Hooded::Dematerialize() const
 {
-	m_attackRange = 1.f;
-	m_weight = 1.2f;
-	m_health = 100.f;
-	m_jumpPosY = 0.f;
-	m_jumpSpeed = 0.02f;
-	m_posX = 250.f;
-	m_posY = 150.f;
-	m_speed = .1f;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		*m_spriteStatus = EntityStatus::Dematerialized;
+}
 
-	DefineSpriteCoordinates(m_spriteCoordinates);
+Hooded::Hooded()
+{
+	InitVariables();
+	InitHooded();
 }
 
 const void Hooded::InitHooded()
@@ -95,16 +78,30 @@ const void Hooded::InitHooded()
 	m_spriteBoundingRectangle.setPosition(m_posX, m_posY);
 }
 
-Hooded::Hooded()
+const void Hooded::InitVariables()
 {
-	InitVariables();
-	InitHooded();
+	m_attackRange = 1.f;
+	m_weight = 1.2f;
+	m_health = 100.f;
+	m_jumpPosY = 0.f;
+	m_jumpSpeed = 0.02f;
+	m_posX = 250.f;
+	m_posY = 150.f;
+	m_speed = .1f;
+
+	DefineSpriteCoordinates(m_spriteCoordinates);
 }
 
-const void Hooded::Dematerialize() const
+const void Hooded::Jump(const float deltaTime, const MapManager& mapManager)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		*m_spriteStatus = EntityStatus::Dematerialized;
+	m_spriteOnGround = mapManager.SpriteOnGround(m_posX, m_posY + m_weight * m_speed * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight));
+	if (m_spriteOnGround) m_jumpPosY = 0.f;
+	else
+	{
+		m_posY += m_weight * m_speed * deltaTime;
+		*m_spriteStatus = EntityStatus::Jumping;
+		m_spriteOnGround = false;
+	}
 }
 
 const void Hooded::Move(const float deltaTime, const MapManager& mapManager)
@@ -112,8 +109,7 @@ const void Hooded::Move(const float deltaTime, const MapManager& mapManager)
 	if (*m_spriteStatus == EntityStatus::Attacking) return;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
-		&& !mapManager.MapCollision(m_posX, m_posY - 1 * m_speed * deltaTime,
-			sf::Vector2i(m_tileWidth, m_tileHeight), *m_spriteStatus)
+		&& !mapManager.MapCollision(m_posX, m_posY - m_speed * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight), *m_spriteStatus)
 		&& *m_spriteStatus != EntityStatus::Jumping || m_jumpPosY != 0.f && m_jumpPosY < 2.f)
 	{
 
@@ -134,17 +130,19 @@ const void Hooded::Move(const float deltaTime, const MapManager& mapManager)
 
 		*m_spriteStatus = EntityStatus::Crouching;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !mapManager.MapCollision(m_posX - 1 * m_speed * deltaTime, m_posY,
-		sf::Vector2i(m_tileWidth, m_tileHeight), *m_spriteStatus) && *m_spriteStatus != EntityStatus::Crouching)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)
+		&& !mapManager.MapCollision(m_posX - m_speed * deltaTime, m_posY, sf::Vector2i(m_tileWidth, m_tileHeight), *m_spriteStatus)
+		&& *m_spriteStatus != EntityStatus::Crouching)
 	{
-		m_posX -= 1 * m_speed * deltaTime;
+		m_posX -= m_speed * deltaTime;
 		*m_spriteDirection = EntityDirection::Left;
 		*m_spriteStatus = m_spriteOnGround ? EntityStatus::Moving : EntityStatus::Jumping;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !mapManager.MapCollision(m_posX + 1 * m_speed * deltaTime, m_posY,
-		sf::Vector2i(m_tileWidth, m_tileHeight), *m_spriteStatus) && *m_spriteStatus != EntityStatus::Crouching)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)
+		&& !mapManager.MapCollision(m_posX + m_speed * deltaTime, m_posY, sf::Vector2i(m_tileWidth, m_tileHeight), *m_spriteStatus)
+		&& *m_spriteStatus != EntityStatus::Crouching)
 	{
-		m_posX += 1 * m_speed * deltaTime;
+		m_posX += m_speed * deltaTime;
 		*m_spriteDirection = EntityDirection::Right;
 		*m_spriteStatus = m_spriteOnGround ? EntityStatus::Moving : EntityStatus::Jumping;
 	}
@@ -158,20 +156,12 @@ const void Hooded::Render(sf::RenderTarget* target)
 	target->draw(m_spriteBoundingRectangle);
 }
 
-const void Hooded::ResetJump(const float deltaTime, const MapManager& mapManager)
-{
-	m_spriteOnGround = mapManager.SpriteOnGround(m_posX, m_posY + m_weight * m_speed * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight));
-	if (m_spriteOnGround) m_jumpPosY = 0.f;
-	else
-	{
-		m_posY += m_weight * m_speed * deltaTime;
-		*m_spriteStatus = EntityStatus::Jumping;
-		m_spriteOnGround = false;
-	}
-}
-
 const void Hooded::Update(Camera& camera, const float deltaTime, const MapManager& mapManager, const std::vector<Entity*>& entities)
 {
 	Dematerialize();
-	Actions(camera, deltaTime, mapManager, entities);
+	Actions(deltaTime, mapManager, entities);
+
+	m_spriteBoundingRectangle.setPosition(m_posX, m_posY);
+	m_sprite.setPosition(m_posX, m_posY);
+	camera.SetPosition(m_posX, m_posY);
 }
