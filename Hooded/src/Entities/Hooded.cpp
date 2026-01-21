@@ -6,7 +6,6 @@ const void Hooded::Actions(const float deltaTime, const MapManager& mapManager, 
 		*m_spriteStatus = EntityStatus::Idle;
 
 	Attack(deltaTime, enemies);
-	Jump(deltaTime, mapManager);
 	Move(deltaTime, mapManager);
 }
 
@@ -34,12 +33,11 @@ const void Hooded::DefineSpriteCoordinates(SpriteCoordinates& spriteCoordinates)
 	constexpr std::pair<unsigned short, unsigned short> crouchingCoordinates(4, 4);
 	constexpr std::pair<unsigned short, unsigned short> dematerializedCoordinates(4, 6);
 	constexpr std::pair<unsigned short, unsigned short> idleCoordinates(1, 0);
-	constexpr std::pair<unsigned short, unsigned short> jumpingCoordinates(8, 5);
+	constexpr std::pair<unsigned short, unsigned short> jumpingCoordinates(3, 5);
 	constexpr std::pair<unsigned short, unsigned short> movingCoordinates(8, 3);
 	constexpr std::pair<unsigned short, unsigned short> takingDamageCoordinates(7, 4);
 
-	spriteCoordinates =
-	{
+	spriteCoordinates = {
 		{ EntityStatus::Attacking, attackCoordinates },
 		{ EntityStatus::Crouching, crouchingCoordinates },
 		{ EntityStatus::Dematerialized, dematerializedCoordinates },
@@ -81,55 +79,48 @@ const void Hooded::InitHooded()
 const void Hooded::InitVariables()
 {
 	m_attackRange = 1.f;
-	m_weight = 1.2f;
+	m_weight = 2.f;
 	m_health = 100.f;
 	m_jumpPosY = 0.f;
-	m_jumpSpeed = 0.02f;
+	m_jumpForce = .003f;
+	m_maxJumpPosY = 0.6f;
 	m_posX = 250.f;
 	m_posY = 150.f;
-	m_speed = .1f;
+	m_speed = 0.1f;
 
 	DefineSpriteCoordinates(m_spriteCoordinates);
 }
 
-const void Hooded::Jump(const float deltaTime, const MapManager& mapManager)
+const void Hooded::ResetJump(const float deltaTime, const MapManager& mapManager)
 {
-	m_spriteOnGround = mapManager.SpriteOnGround(m_posX, m_posY + m_weight * m_speed * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight));
+	m_jumpKeyReleased = true;
+
 	if (m_spriteOnGround) m_jumpPosY = 0.f;
-	else
-	{
-		m_posY += m_weight * m_speed * deltaTime;
-		*m_spriteStatus = EntityStatus::Jumping;
-		m_spriteOnGround = false;
-	}
+	else m_posY += m_weight * GRAVITY * deltaTime;
 }
 
 const void Hooded::Move(const float deltaTime, const MapManager& mapManager)
 {
+	m_spriteOnGround = mapManager.SpriteOnGround(m_posX, m_posY + m_weight * GRAVITY * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight));
+
 	if (*m_spriteStatus == EntityStatus::Attacking) return;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
-		&& !mapManager.MapCollision(m_posX, m_posY - m_speed * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight), *m_spriteStatus)
-		&& *m_spriteStatus != EntityStatus::Jumping || m_jumpPosY != 0.f && m_jumpPosY < 2.f)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && (m_spriteOnGround || !m_jumpKeyReleased))
 	{
-
-		if (m_jumpPosY == 0) m_jumpPosY += m_weight;
-
-		m_jumpPosY += m_jumpSpeed;
-
-		m_posY -= m_jumpPosY;
-		*m_spriteStatus = EntityStatus::Jumping;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || *m_spriteStatus == EntityStatus::Crouching)
-	{
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		if (!mapManager.MapCollision(m_posX, m_posY - m_weight * GRAVITY * deltaTime, sf::Vector2i(m_tileWidth, m_tileHeight), *m_spriteStatus)
+			&& m_jumpPosY < m_maxJumpPosY)
 		{
-			*m_spriteStatus = EntityStatus::Idle;
-			return;
+			m_jumpKeyReleased = false;
+			m_jumpPosY += m_jumpForce * deltaTime;
+			m_posY -= m_jumpPosY * deltaTime;
+			*m_spriteStatus = EntityStatus::Jumping;
 		}
-
-		*m_spriteStatus = EntityStatus::Crouching;
 	}
+	else ResetJump(deltaTime, mapManager);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) *m_spriteStatus = EntityStatus::Crouching;
+	else if (*m_spriteStatus == EntityStatus::Crouching) *m_spriteStatus = EntityStatus::Idle;
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)
 		&& !mapManager.MapCollision(m_posX - m_speed * deltaTime, m_posY, sf::Vector2i(m_tileWidth, m_tileHeight), *m_spriteStatus)
 		&& *m_spriteStatus != EntityStatus::Crouching)

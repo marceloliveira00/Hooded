@@ -25,7 +25,8 @@ protected:
 	float m_attackRange = 0.f;
 	float m_health = 0.f;
 	float m_jumpPosY = 0.f;
-	float m_jumpSpeed = 0.02f;
+	float m_jumpForce = 0.f;
+	float m_maxJumpPosY = 0.f;
 	float m_posX = 0.f;
 	float m_posY = 0.f;
 	float m_speed = 0.f;

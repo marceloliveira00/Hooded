@@ -89,7 +89,7 @@ const bool Animation::WaitForAnimationToEnd(const EntityStatus entityStatus) con
 	case EntityStatus::Idle:
 		return false;
 	case EntityStatus::Jumping:
-		return false;
+		return true;
 	case EntityStatus::Moving:
 		return false;
 	case EntityStatus::TakingDamage:

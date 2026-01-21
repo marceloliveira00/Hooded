@@ -45,7 +45,7 @@ const void BlueHooded::InitVariables()
 	m_weight = 1.2f;
 	m_health = 100.f;
 	m_jumpPosY = 0.f;
-	m_jumpSpeed = 0.02f;
+	m_jumpForce = 0.02f;
 	m_health = 100.f;
 	m_posX = 300.f;
 	m_posY = 319.799927f;
